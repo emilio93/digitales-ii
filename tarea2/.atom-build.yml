@@ -1,0 +1,4 @@
+cmd: "./build.sh"
+name: "build and test"
+sh: false,
+cwd: "{PROJECT_PATH}"
