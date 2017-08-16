@@ -1,6 +1,12 @@
-`include "modulos/registro32bits.v"
-
 module test1;
+  initial begin
+    $display("Test Bench 1 registro32bits");
+    $display("Prueba la funcionalidad de carga en serie a la izquierda");
+    $display("********************************************************");
+    $dumpfile("tests/registro32bits/test1.vcd");
+    $dumpvars(0, test1);
+  end
+
   reg clk = 0;
   reg enb = 1;
   reg dir;
@@ -17,10 +23,6 @@ module test1;
   always #1 clk = ~clk;
 
   initial begin
-    $display("Test Bench 1 registro32bits");
-    $dumpfile("tests/registro32bits/test1.vcd");
-    $dumpvars(0, test1);
-
     // Se carga D = 0000
     #0 modo = 2'b10;
     #0 dir = 0;

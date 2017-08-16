@@ -1,12 +1,17 @@
-`include "modulos/registro.v"
-
 module test1;
-  reg clk =   0;
-  reg enb =   1;
-  reg dir;
-  reg s_in;
+  initial begin
+    $display("Test Bench 1 registro");
+    $display("Prueba la funcionalidad de carga en serie a la izquierda");
+    $display("********************************************************");
+    $dumpfile("tests/registro/test1.vcd");
+    $dumpvars(0, test1);
+  end
+  reg clk  = 0;
+  reg enb  = 1;
+  reg dir  = 0;
+  reg s_in = 1;
 
-  reg [1:0] modo  = 2'b00;
+  reg [1:0] modo  = 2'b10;
   reg [3:0] d     = 4'b0000;
 
   wire [3:0] q;
@@ -14,19 +19,29 @@ module test1;
 
   registro registro1(clk, enb, dir, s_in, modo, d, q, s_out);
 
+  // _-_-_-_-_-
   always #1 clk = ~clk;
 
   initial begin
-    $display("Test Bench 1 registro");
-    $dumpfile("tests/registro/test1.vcd");
-    $dumpvars(0, test1);
-
     // Se carga D = 0000
-    #0 modo = 2'b10;
-    #0 dir = 0;
-    #0 s_in = 1;
-    #0 d = 4'b0000;
-    #2 modo = 2'b00;
+    // Estos valores ya se asignaron
+    // #0 modo = 2'b10;
+    // #0 dir = 0;
+    // #0 s_in = 1;
+    // #0 d = 4'b0000;
+
+    // modo de carga en serie
+    #2 modo = 2'b00; // cargar 1's
+    #10 s_in = 2'b0; // cargar 0's
+
+    // secuencia
+    #2 s_in = 2'b1;
+    #2 s_in = 2'b0;
+    #2 s_in = 2'b1;
+    #2 s_in = 2'b0;
+    #2 s_in = 2'b1;
+    #2 s_in = 2'b0;
+
     #8 $finish;
   end
 
