@@ -16,12 +16,8 @@ module registro32bits (
   output [31:0] q,    // estado del registro
   output s_out        // bit que sale cuando modo=00, es 0 para modo!=00
 );
-  initial begin
-    $display("Modulo registro32bits");
-  end
-
-  reg        s_out;
-  reg [7:0]  s_in_interno;
+  wire       s_out;
+  wire [7:0]  s_in_interno;
   wire [7:0] s_out_interno;
 
   // MSB
@@ -35,34 +31,25 @@ module registro32bits (
   registro r7(clk, enb, dir, s_in_interno[7], modo, d[3:0],   q[3:0],   s_out_interno[7]);
   // LSB
 
-  always @ (posedge clk) begin
-    // Conexiones para derecha
-    if (dir) begin
-      // esto diferencia cuando es circular
-      s_in_interno[0] <= (modo == 2'b01) ? s_out_interno[7] : s_in;
-      s_in_interno[1] <= s_out_interno[0];
-      s_in_interno[2] <= s_out_interno[1];
-      s_in_interno[3] <= s_out_interno[2];
-      s_in_interno[4] <= s_out_interno[3];
-      s_in_interno[5] <= s_out_interno[4];
-      s_in_interno[6] <= s_out_interno[5];
-      s_in_interno[7] <= s_out_interno[6];
+  // assign s_out_interno[0] = dir ? q[28] : q[31];
+  // assign s_out_interno[1] = dir ? q[24] : q[27];
+  // assign s_out_interno[2] = dir ? q[20] : q[23];
+  // assign s_out_interno[3] = dir ? q[16] : q[19];
+  // assign s_out_interno[4] = dir ? q[12] : q[15];
+  // assign s_out_interno[5] = dir ? q[8]  : q[11];
+  // assign s_out_interno[6] = dir ? q[4]  : q[7];
+  // assign s_out_interno[7] = dir ? q[0]  : q[3];
 
-      s_out <= s_out_interno[7];
-    end
-    // Conexiones para izquierda
-    else if (~dir) begin
-      // esto diferencia cuando es circular
-      s_in_interno[0] <= modo == 2'b01 ? s_out_interno[7] : s_out_interno[1];
-      s_in_interno[1] <= s_out_interno[2];
-      s_in_interno[2] <= s_out_interno[3];
-      s_in_interno[3] <= s_out_interno[4];
-      s_in_interno[4] <= s_out_interno[5];
-      s_in_interno[5] <= s_out_interno[6];
-      s_in_interno[6] <= s_out_interno[7];
-      s_in_interno[7] <= s_in;
+  assign s_out = modo == 2'b00
+                ? dir ? s_out_interno[0] : s_out_interno[7]
+                : 0;
 
-      s_out <= s_out_interno[0];
-    end
-  end
+  assign s_in_interno[0] = dir ? (modo == 2'b01) ? s_out_interno[7] : s_in : s_out_interno[1];
+  assign s_in_interno[1] = dir ? s_out_interno[0] : s_out_interno[2];
+  assign s_in_interno[2] = dir ? s_out_interno[1] : s_out_interno[3];
+  assign s_in_interno[3] = dir ? s_out_interno[2] : s_out_interno[4];
+  assign s_in_interno[4] = dir ? s_out_interno[3] : s_out_interno[5];
+  assign s_in_interno[5] = dir ? s_out_interno[4] : s_out_interno[6];
+  assign s_in_interno[6] = dir ? s_out_interno[5] : s_out_interno[7];
+  assign s_in_interno[7] = dir ? s_out_interno[6] : (modo ==2'b01) ? s_out_interno[0] : s_in;
 endmodule

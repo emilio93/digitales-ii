@@ -15,29 +15,27 @@ module registro (
   output [3:0] q,     // estado del registro
   output s_out        // bit que sale cuando modo=00, es 0 para modo!=00
 );
-  reg s_out;
+  wire s_out;
   reg [3:0] q;
 
+  // s_out se asigna para evitar retrasos en modulos
+  // utilizan el modulo registro
+  assign s_out = modo == 2'b00
+                 ? dir ? q[0] : q[3]
+                 : 0;
+
   always @(posedge clk) begin
+    // se chequea la señal de habilitado enb
     if (enb) begin
 
-      // carga en serie
-      if (modo == 2'b00) begin
-        q <= dir ? {s_in, q[3:1]} : {q[2:0], s_in};
-        s_out <= dir ? q[0] : q[3];
-      end
+      // modo de carga en serie
+      if (modo == 2'b00)      q <= dir ? {s_in, q[3:1]} : {q[2:0], s_in};
 
-      // ciclo
-      if (modo == 2'b01) begin
-        s_out <= 0;
-        q <= dir ? {q[0], q[3:1]} : {q[2:0], q[3]};
-      end
+      // modo de ciclo
+      else if (modo == 2'b01) q <= dir ? {q[0], q[3:1]} : {q[2:0], q[3]};
 
-      // carga en paralelo
-      if (modo == 2'b10) begin
-          s_out <= 0;
-          q <= d;
-      end
+      // modo de carga en paralelo
+      else if (modo == 2'b10) q <= d;
     end
   end
 endmodule
