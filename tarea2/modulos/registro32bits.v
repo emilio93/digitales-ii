@@ -1,5 +1,5 @@
 /*
-  El módulo registro32bits hace uso del modulo registro, lo intancia ocho
+  El módulo registro32bits hace uso del modulo registro, lo instancia ocho
   veces y realiza las conexiones necesarias para mantener el comportamiento
   deseado del registro de desplazamiento.
  */
@@ -31,25 +31,20 @@ module registro32bits (
   registro r7(clk, enb, dir, s_in_interno[7], modo, d[3:0],   q[3:0],   s_out_interno[7]);
   // LSB
 
-  // assign s_out_interno[0] = dir ? q[28] : q[31];
-  // assign s_out_interno[1] = dir ? q[24] : q[27];
-  // assign s_out_interno[2] = dir ? q[20] : q[23];
-  // assign s_out_interno[3] = dir ? q[16] : q[19];
-  // assign s_out_interno[4] = dir ? q[12] : q[15];
-  // assign s_out_interno[5] = dir ? q[8]  : q[11];
-  // assign s_out_interno[6] = dir ? q[4]  : q[7];
-  // assign s_out_interno[7] = dir ? q[0]  : q[3];
-
   assign s_out = modo == 2'b00
                 ? dir ? s_out_interno[0] : s_out_interno[7]
                 : 0;
-
-  assign s_in_interno[0] = dir ? (modo == 2'b01) ? s_out_interno[7] : s_in : s_out_interno[1];
+  
+  assign s_in_interno[0] = (modo == 2'b01)
+                           ? dir ? s_out_interno[7] : s_out_interno[1]
+                           : dir ? s_in : s_out_interno[1];
   assign s_in_interno[1] = dir ? s_out_interno[0] : s_out_interno[2];
   assign s_in_interno[2] = dir ? s_out_interno[1] : s_out_interno[3];
   assign s_in_interno[3] = dir ? s_out_interno[2] : s_out_interno[4];
   assign s_in_interno[4] = dir ? s_out_interno[3] : s_out_interno[5];
   assign s_in_interno[5] = dir ? s_out_interno[4] : s_out_interno[6];
   assign s_in_interno[6] = dir ? s_out_interno[5] : s_out_interno[7];
-  assign s_in_interno[7] = dir ? s_out_interno[6] : (modo ==2'b01) ? s_out_interno[0] : s_in;
+  assign s_in_interno[7] = (modo == 2'b01)
+                           ? dir ? s_out_interno[6] : s_out_interno[0]
+                           : dir ? s_out_interno[6] : s_in;
 endmodule

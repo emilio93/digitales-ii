@@ -26,7 +26,8 @@ for modulo in ${modulos[@]}; do
     echo "Testbench ${testbench}"
 
     iverilog -o build/${modulo}/${testbench} ${tb} modulos/registro.v modulos/registro32bits.v
-    vvp -M ~/.local/install/ivl/lib/ivl build/registro/${testbench}
+    vvp -M ~/.local/install/ivl/lib/ivl build/${modulo}/${testbench}
+    gtkwave tests/${modulo}/${testbench}.vcd
   done
 
 done

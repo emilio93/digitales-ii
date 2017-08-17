@@ -23,12 +23,10 @@ module test1;
   always #1 clk = ~clk;
 
   initial begin
-    // Se carga D = 0000
-    // Estos valores ya se asignaron
-    // #0 modo = 2'b10;
-    // #0 dir = 0;
-    // #0 s_in = 1;
-    // #0 d = 4'b0000;
+    #0 modo = 2'b10;
+    #0 dir = 0;
+    #0 s_in = 1;
+    #0 d = 4'b0000;
 
     // modo de carga en serie
     #2 modo = 2'b00; // cargar 1's

@@ -23,13 +23,45 @@ module test1;
   always #1 clk = ~clk;
 
   initial begin
-    // Se carga D = 0000
+    // Se cargan D distintos
     #0 modo = 2'b10;
     #0 dir = 0;
     #0 s_in = 1;
     #0 d = 32'h0;
+
+    #4 d = 32'hffffffff;
+    #4 d = 32'b00000000000000000000000000001111;
+    #4 d = 32'hffaebc13;
+
+    // retraso acumulado 12
+
+    // a partir de este numero se insertan hacia la izquierda
+    // sale el MSB s_out
+    #4 s_in = 0;
     #4 modo = 2'b00;
-    #80 $finish;
+
+    // retraso acumulado 20
+
+    // ahora a la derecha insertandole 1
+    #120 s_in = 1;
+    #1 dir = 1;
+
+    // retraso acumulado 141
+
+    // se carga un valor y se rota circularmente
+    #120 modo = 2'b10;
+    #1 d = 32'habc456f0;
+    #4 dir = 0;
+    #1 modo = 2'b01;
+
+    // retraso acumulado 267
+
+    #120 dir = 1;
+
+    // retraso acumulado 387
+
+    #120 $finish;
+    // retraso acumulado 507
   end
 
   initial begin
