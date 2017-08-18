@@ -29,9 +29,9 @@ function process_tb() {
   fi
 
   if [ "$test" == "true" ]; then
-    echo "vvp -M ~/.local/install/ivl/lib/ivl build/${modulo}/${testbench}
+    echo "vvp build/${modulo}/${testbench}
     "
-    vvp -M ~/.local/install/ivl/lib/ivl build/${modulo}/${testbench}
+    vvp build/${modulo}/${testbench}
   fi
 
   if [ "$view" == "true" ]; then
