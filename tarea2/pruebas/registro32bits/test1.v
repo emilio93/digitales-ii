@@ -28,51 +28,90 @@ module test1;
     #0 dir = 0;
     #0 s_in = 1;
     #0 d = 32'h0;
+    #4;
 
-    #4 d = 32'hffffffff;
-    #4 d = 32'b00000000000000000000000000001111;
+    // se prueba posición de registros individuales
+    #2 d = 32'hffffffff;
+    #2 d = 32'hfffffff0;
+    #2 d = 32'hffffff00;
+    #2 d = 32'hfffff000;
+    #2 d = 32'hffff0000;
+    #2 d = 32'hfff00000;
+    #2 d = 32'hff000000;
+    #2 d = 32'hf0000000;
+    #2 d = 32'h00000000;
+
+    #2 d = 32'hf0000000;
+    #2 d = 32'hff000000;
+    #2 d = 32'hfff00000;
+    #2 d = 32'hffff0000;
+    #2 d = 32'hfffff000;
+    #2 d = 32'hffffff00;
+    #2 d = 32'hfffffff0;
+    #2 d = 32'hffffffff;
+
+    // se prueban bits de primer registro individual
+    #2 d = 32'b0001;
+    #2 d = 32'b0010;
+    #2 d = 32'b0100;
+    #2 d = 32'b1000;
+
+    // un numero cualquiera
     #4 d = 32'hffaebc13;
-
-    // retraso acumulado 12
 
     // a partir de este numero se insertan hacia la izquierda
     // sale el MSB s_out
     #4 s_in = 0;
     #4 modo = 2'b00;
 
-    // retraso acumulado 20
-
     // ahora a la derecha insertandole 1
-    #120 s_in = 1;
-    #1 dir = 1;
-
-    // retraso acumulado 141
+    #100 s_in = 1;
+    #0 dir = 1;
 
     // se carga un valor y se rota circularmente
     #120 modo = 2'b10;
-    #1 d = 32'habc456f0;
+    #4 d = 32'haf00f050;
     #4 dir = 0;
-    #1 modo = 2'b01;
+    #4;
+    #4 modo = 2'b01;
+
+    #120 modo = 2'b10;
+    #0 d = 32'h000aa000;
+    #4 dir = 0;
+    #4;
+    #4 modo = 2'b01;
+
 
     // retraso acumulado 267
 
-    #120 dir = 1;
+    #20 dir = 1;
+    #30 dir = 0;
 
-    // retraso acumulado 387
+    #20 dir = 1;
+    #30 dir = 0;
+
+    #20 dir = 1;
+    #30 dir = 0;
+
+    #20 dir = 1;
+    #30 dir = 0;
+
+    #20 dir = 1;
+    #30 dir = 0;
 
     #120 $finish;
-    // retraso acumulado 507
   end
 
   initial begin
+    $display("\t\ttiempo  dir s_in modo d \t\t\t\tq \t\t\t\t  s_out\n");
     $monitor(
-      "En t:%t\n", $time,
-      "dir:\t%b\n", dir,
-      "s_in:\t%b\n", s_in,
-      "modo:\t%2b\n", modo,
-      "d:\t%4b\n", d,
-      "q:\t%4b\n", q,
-      "s_out:\t%b\n", s_out,
-      "--------------------------");
+      "%d", $time,
+      "\t%b   ", dir,
+      "%b    ", s_in,
+      "%2b   ", modo,
+      "%4b\t", d,
+      "%4b  ", q,
+      "%b", s_out
+    );
   end
 endmodule

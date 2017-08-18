@@ -46,14 +46,14 @@ module test3;
   end
 
   initial begin
+    $display("\t\ttiempo\tdir\ts_in\tmodo\td\tq\ts_out\n");
     $monitor(
-      "En t:%t\n", $time,
-      "dir:\t%b\n", dir,
-      "s_in:\t%b\n", s_in,
-      "modo:\t%2b\n", modo,
-      "d:\t%4b\n", d,
-      "q:\t%4b\n", q,
-      "s_out:\t%b\n", s_out,
-      "--------------------------");
+      "%d", $time,
+      "\t%b", dir,
+      "\t%b", s_in,
+      "\t%2b", modo,
+      "\t%4b", d,
+      "\t%4b", q,
+      "\t%b", s_out);
   end
 endmodule

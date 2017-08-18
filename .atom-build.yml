@@ -1,4 +1,4 @@
-cmd: "./build.sh"
+cmd: "cd tarea2 && ./build.sh"
 name: "build and test"
 sh: false,
 cwd: "{PROJECT_PATH}"

@@ -15,16 +15,14 @@ module registro (
   output [3:0] q,     // estado del registro
   output s_out        // bit que sale cuando modo=00, es 0 para modo!=00
 );
-  wire s_out;
+
+  reg s_out;
   reg [3:0] q;
 
-  // s_out se asigna para evitar retrasos en modulos
-  // utilizan el modulo registro
-  assign s_out = modo == 2'b00
-                 ? dir ? q[0] : q[3]
-                 : 0;
-
   always @(posedge clk) begin
+    if (modo == 2'b00) s_out <= dir ? q[0] : q[3];
+    else s_out <= 0;
+
     // se chequea la señal de habilitado enb
     if (enb) begin
 
