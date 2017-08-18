@@ -6,7 +6,7 @@ declare -a modulos=(
   "modulos/registro32bits.v"
 )
 
-# process_tb(tb, modulo, compile, test, view)
+# process_tb tb modulo compile test view
 function process_tb() {
   tb=$1
   modulo=$2
@@ -41,20 +41,12 @@ function process_tb() {
   fi
 }
 
-compile=''
-test=''
-view=''
-while getopts 'ctv' flag; do
-  case "${flag}" in
-    c) compile='true' ;;
-    t) test='true' ;;
-    v) view='true' ;;
-    *) error "Unexpected option ${flag}" ;;
-  esac
-done
-
-mkdir -p build
-for modulo in ${modulos[@]}; do
+# process_modulo(modulo, compile, test, view)
+function process_modulo() {
+  modulo=$1
+  compile=$2
+  test=$3
+  view=$4
 
   if [ "$compile" == "true" ] || [ "$test" == "true" ] || [ "$view" == "true" ]; then
     echo "** Modulo ${modulo}"
@@ -76,5 +68,32 @@ for modulo in ${modulos[@]}; do
   for tb in pruebas/${modulo}/*.v; do
     process_tb "$tb" "$modulo" "$compile" "$test" "$view"
   done
+}
 
+compile='false'
+test='false'
+view='false'
+while getopts 'ctv' flag; do
+  case "${flag}" in
+    c) compile='true' ;;
+    t) test='true' ;;
+    v) view='true' ;;
+    *) error "Unexpected option ${flag}" ;;
+  esac
 done
+
+mkdir -p build
+
+if [ $# -eq 0 ] || [ "$1" == "-c" ] || [ "$1" == "-t" ] || [ "$1" == "-v" ]; then
+  echo "Tomando todos los tests"
+  for modulo in ${modulos[@]}; do
+    process_modulo "$modulo" "$compile" "$test" "$view"
+  done
+else
+  echo "tomando test $1"
+  tb=$1
+  modulo=${1/pruebas\//}
+  modulo=${modulo/\/*.v/}
+  echo "process_tb $tb $modulo $compile $test $view"
+  process_tb "$tb" "$modulo" "$compile" "$test" "$view"
+fi
