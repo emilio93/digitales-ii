@@ -1,0 +1,47 @@
+[*]
+[*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
+[*] Fri Aug 18 05:28:56 2017
+[*]
+[dumpfile] "tests/registro/test1.vcd"
+[dumpfile_mtime] "Fri Aug 18 05:25:21 2017"
+[dumpfile_size] 1141
+[savefile] "tests/registro/test1.gtkw"
+[timestart] 0
+[size] 1878 1025
+[pos] -30 -30
+*-2.382591 33 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test1.
+[sst_width] 223
+[signals_width] 176
+[sst_expanded] 1
+[sst_vpaned_height] 291
+@28
+[color] 3
+test1.registro1.clk
+[color] 4
+test1.registro1.enb
+test1.registro1.s_in
+test1.registro1.dir
+test1.registro1.modo[1:0]
+@c00028
+test1.registro1.d[3:0]
+@28
+(0)test1.registro1.d[3:0]
+(1)test1.registro1.d[3:0]
+(2)test1.registro1.d[3:0]
+(3)test1.registro1.d[3:0]
+@1401200
+-group_end
+@800028
+test1.registro1.q[3:0]
+@28
+(0)test1.registro1.q[3:0]
+(1)test1.registro1.q[3:0]
+(2)test1.registro1.q[3:0]
+(3)test1.registro1.q[3:0]
+@1001208
+-group_end
+@28
+test1.registro1.s_out
+[pattern_trace] 1
+[pattern_trace] 0
