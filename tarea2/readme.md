@@ -34,4 +34,4 @@
      - test4.gtkw
      - test5.gtkw
    - registro32bits
-     -test1.gtkw
+     - test1.gtkw
