@@ -84,16 +84,6 @@ done
 
 mkdir -p build
 
-if [ $# -eq 0 ] || [ "$1" == "-c" ] || [ "$1" == "-t" ] || [ "$1" == "-v" ]; then
-  echo "Tomando todos los tests"
-  for modulo in ${modulos[@]}; do
-    process_modulo "$modulo" "$compile" "$test" "$view"
-  done
-else
-  echo "tomando test $1"
-  tb=$1
-  modulo=${1/pruebas\//}
-  modulo=${modulo/\/*.v/}
-  echo "process_tb $tb $modulo $compile $test $view"
-  process_tb "$tb" "$modulo" "$compile" "$test" "$view"
-fi
+for modulo in ${modulos[@]}; do
+  process_modulo "$modulo" "$compile" "$test" "$view"
+done
