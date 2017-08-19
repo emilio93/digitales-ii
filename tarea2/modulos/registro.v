@@ -28,35 +28,44 @@
 module registro (
   input        clk,   // señal de reloj
   input        enb,   // habilitado,
-                      // 1 : true
-                      // 0 : false
+                      //    1 : true
+                      //    0 : false
   input        dir,   // dirección de rotación,
-                      // 0 : izquierda
-                      // 1 : derecha
+                      //    0 : izquierda
+                      //    1 : derecha
   input        s_in,  // valor de entrada en serie cuando modo=00
   input  [1:0] modo,  // modo del contador, pueden ser
-                      // 00 : carga en serie
-                      // 01 : rotacion circular
-                      // 10 : carga en paralelo
+                      //    00 : carga en serie
+                      //    01 : rotacion circular
+                      //    10 : carga en paralelo
   input  [3:0] d,     // datos que se cargan en paralelo cuando modo=10
   output [3:0] q,     // estado del registro
   output s_out        // bit que sale cuando modo=00, es 0 para modo!=00
 );
 
+  // ambas salidas del modulo se denominan reg
+  // debido a que implementan lógica secuencial.
   reg s_out;
   reg [3:0] q;
 
+  // rutina del circuito ante un flanco positivo de reloj
   always @(posedge clk) begin
+
+    // se asigna s_out según la especificación
+    // para modo == 00 es el valor que sale del
+    // registro, para los demás modos(OJO que
+    // esto incluye modos no contemplados en el
+    // diseño, ie !=00, !=01, !=10)
     if (modo == 2'b00) s_out <= dir ? q[0] : q[3];
     else s_out <= 0;
 
-    // se chequea la señal de habilitado enb
+    // para todo lo demás se chequea la señal de habilitado enb
     if (enb) begin
 
       // modo de carga en serie
       if (modo == 2'b00)      q <= dir ? {s_in, q[3:1]} : {q[2:0], s_in};
 
-      // modo de ciclo
+      // modo de rotación circular
       else if (modo == 2'b01) q <= dir ? {q[0], q[3:1]} : {q[2:0], q[3]};
 
       // modo de carga en paralelo

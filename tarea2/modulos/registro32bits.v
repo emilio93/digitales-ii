@@ -38,8 +38,14 @@ module registro32bits (
   output [31:0] q,    // estado del registro
   output s_out        // bit que sale cuando modo=00, es 0 para modo!=00
 );
+
   reg       s_out;
   reg [7:0]  s_in_interno;
+
+  // s_out interno se asigna mediante lógica combinacional
+  // debido a que varía según la señal de un reg contenida
+  // en el módulo registro, ya sea a q[0] en caso que
+  // modo == 01, o q[31] en caso que modo != 01
   wire [7:0] s_out_interno;
 
   wire [1:0] modo_interno;
