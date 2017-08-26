@@ -28,7 +28,7 @@
   http://www.ti.com/lit/ds/symlink/sn74cbtlv3257.pdf
   @ 3.3V
 
-  Los canales son de 4 bits pero solo se implementa 1 canal.
+  Los canales son de 4 bits pero solo se implementa 1 solo bit.
  */
 module mux(
   input s,
@@ -59,9 +59,7 @@ module mux(
   parameter Cl = 0.05; // nF => 50pF
 
   integer c;
-  initial begin
-    c = 0;
-  end
+  initial c = 0;
 
   // esta es la señal retrasada de la entrada
   reg aRet;
@@ -87,6 +85,7 @@ module mux(
     #tpin aRet = a;
   end
 
+  // incrementar contador
   always @ (y) begin
     c = c+1;
     $display("Potencia disipada por el MUX: %f nW", c * Cl * Vcc);

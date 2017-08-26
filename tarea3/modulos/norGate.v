@@ -45,16 +45,13 @@ module norGate (
   wire y;
 
   integer c;
-  initial begin
-    c=0;
-    $display ("Compuerta NOR");
-  end
+  initial c=0;
 
   assign #(tpdmin:tpdmax:tpdmax) y = !(a || b);
 
-  always @(Y) begin
+  always @(y) begin
     c=c+1;
-    $display("Potencia disipada: %f", c * Cl * Vcc);
+    $display("     Potencia disipada por la compuerta NOR: %f", c * Cl * Vcc);
   end
 
 endmodule

@@ -59,9 +59,7 @@ module mux(
   parameter Cl = 0.05; // nF => 50pF
 
   integer c;
-  initial begin
-    c = 0;
-  end
+  initial c = 0;
 
   // esta es la señal retrasada de la entrada
   reg aRet;
@@ -89,7 +87,7 @@ module mux(
 
   always @ (y) begin
     c = c+1;
-    $display("Potencia disipada por el MUX: %f nW", c * Cl * Vcc);
+    $display("Potencia disipada por la compuerta NOR: %f", c * Cl * Vcc);
   end
 
 endmodule

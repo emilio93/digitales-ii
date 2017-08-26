@@ -20,46 +20,85 @@
  * SOFTWARE.
  */
 
-`include "modulos/notGate.v"
+`include "modulos/norGate.v"
 `timescale 1ns/1ps
-module testNotGate;
+
+module testNorGate;
   initial begin
-    $display ("testNotGate");
-    $dumpfile("tests/testNotGate.vcd");
-    $dumpvars(0, testNotGate);
+    $display ("testNorGate");
+    $dumpfile("tests/testNorGate.vcd");
+    $dumpvars(0, testNorGate);
   end
 
-  reg a;
+  reg a, b;
   wire y;
 
   realtime inicio, retardo;
 
   initial begin
     inicio = $realtime;
-    $monitor("%t | %b | %b | %f ns", $time, a, y, retardo);
+    $monitor("%t | %b | %b | %b | %f ns", $time, a, b, y, retardo);
 
-    $display("--------------------------------------");
-    $display("Test para el Inversor");
-    $display("---------------------+---+---+--------");
-    $display("              Tiempo | a | y | Retardo");
-    $display("---------------------+---+---+--------");
+    $display("------------------------------------------");
+    $display("Test para la compuerta NOR");
+    $display("---------------------+---+---+---+--------");
+    $display("              Tiempo | a | b | y | Retardo");
+    $display("---------------------+---+---+---+--------");
 
-    $display("not x = x");
+    $display("x nor x = x");
 
     # 1000 a = 0;
+    # 0 b = 1'bx;
     # 0 retardo = 0;
     # 0 inicio = $realtime;
-    $display("not 0 = 1");
+    $display("0 nor x = x");
 
     # 1000 a = 1'bx;
+    # 0 b = 0;
     # 0 retardo = 0;
     # 0 inicio = $realtime;
-    $display("not 1 = 0");
+    $display("x nor 0 = x");
+
+    # 1000 a = 1;
+    # 0 b = 1'bx;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("1 nor x = 0");
+
+    # 1000 a = 1'bx;
+    # 0 b = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("x nor 1 = 0");
+
+    # 1000 a = 0;
+    # 0 b = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("0 nor 0 = 1");
+
+    # 1000 a = 1;
+    # 0 b = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("1 nor 0 = 0");
+
+    # 1000 a = 0;
+    # 0 b = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("0 nor 1 = 0");
+
+    # 1000 a = 1;
+    # 0 b = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("1 nor 1 = 0");
   end
 
   always @ (y) begin
     retardo = $realtime-inicio;
   end
 
-  notGate notGate1 (.a(a), .nota(y));
+  norGate norGate1 (.a(a), .b(b), .y(y));
 endmodule

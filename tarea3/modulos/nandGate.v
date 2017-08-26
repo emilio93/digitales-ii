@@ -35,26 +35,23 @@ module nandGate (
   output y  // salida
 );
 
-  parameter tpdmin = 1.5; // ns
-  parameter tpdmax = 11.1; // ns
+  parameter tpdmin = 1.5; // ns, máximo de los mínimos
+  parameter tpdmax = 11.1; // ns, máximo de los máximos
 
-  wire a, b;
-  wire y;
+  // solo lógica combinacional
+  wire a, b, y;
 
   integer c;
-  initial begin
-    c=0;
-    $display ("Compuerta NAND");
-  end
+  initial c=0;
 
-  assign #(tpdmin:tpdmax:tpdmax) Y = !(a & b);
+  assign #(tpdmin:tpdmax:tpdmax) y = !(a & b);
 
   parameter Vcc = 3.3; // V
   parameter Cl = 0.05; // nF
 
-  always @(Y) begin
+  always @ (y) begin
     c=c+1;
-    $display("Potencia disipada: %f unidades", c * Cl * Vcc);
+    $display("    Potencia disipada por compuerta NAND: %f", c * Cl * Vcc);
   end
 
 endmodule

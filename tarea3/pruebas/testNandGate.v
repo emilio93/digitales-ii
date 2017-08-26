@@ -22,6 +22,7 @@
 
 `include "modulos/nandGate.v"
 `timescale 1ns/1ps
+
 module testNandGate;
   initial begin
     $display ("testNandGate");
@@ -29,45 +30,75 @@ module testNandGate;
     $dumpvars(0, testNandGate);
   end
 
-  reg a = 0;
-  reg b = 0;
-  reg temp;
+  reg a, b;
+  wire y;
 
-  parameter tpdm = 800;  //min, same for high and low,, T = –40°C to 85°C, vcc ~ 3.3
-  parameter tpdM = 3800; //max, ... , this will be the typical, as we're modeling for a worst case scenario
-  wire out;
+  realtime inicio, retardo;
 
   initial begin
-    $monitor("%t | %b | %b | %b", $time, a, b, out );
+    inicio = $realtime;
+    $monitor("%t | %b | %b | %b | %f ns", $time, a, b, y, retardo);
 
-    $display("\nTest para la compuerta NAND");
-    $display("---------------------------\n");
-    $display("              Tiempo | A | B | OUT");
-    $display("---------------------+---+---+----");
+    $display("------------------------------------------");
+    $display("Test para la compuerta NAND");
+    $display("---------------------+---+---+---+--------");
+    $display("              Tiempo | a | b | y | Retardo");
+    $display("---------------------+---+---+---+--------");
 
-    # 4000 a = 1;
-    $display("Output starts in 1 (after delay), this shouldn't change it");
-    # 4000 b = 1;
-    $display("!(1&1) = 0");
-    # 4000 b = 1'bx;
-    $display("!(1&x) = x");
-    # 4000 a = 1'bx;
-    $display("!(x&x) = x");
-    # 4000 a = 0;
-    $display("!(0&x) = 1");
-    # 4000 a = 0; b = 1;
-    $display("Testing time requirements.");
-    # 2000 a = 1; b = 1;
-    # 4000 $finish;
+    $display("x nand x = x");
+
+    # 1000 a = 0;
+    # 0 b = 1'bx;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("0 nand x = 1");
+
+    # 1000 a = 1'bx;
+    # 0 b = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("x nand 0 = 1");
+
+    # 1000 a = 1;
+    # 0 b = 1'bx;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("1 nand x = x");
+
+    # 1000 a = 1'bx;
+    # 0 b = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("x nand 1 = x");
+
+    # 1000 a = 0;
+    # 0 b = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("0 nand 0 = 1");
+
+    # 1000 a = 1;
+    # 0 b = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("1 nand 0 = 1");
+
+    # 1000 a = 0;
+    # 0 b = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("0 nand 1 = 1");
+
+    # 1000 a = 1;
+    # 0 b = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+    $display("1 nand 1 = 0");
   end
 
-  always @ (a,b) begin
-    temp = !( a & b );
-    #(tpdm:tpdM:tpdM);
-    if( !( a & b ) !== temp) begin
-      $display("\n\n******ERROR: Time requirements not satisfied. Output is undefined.*******\n at interval:%t -%t\n\n", $time-(tpdm:tpdM:tpdM),$time);
-      $finish;
-    end
+  always @ (y) begin
+    retardo = $realtime-inicio;
   end
-  nandGate n (a, b, out);
+
+  nandGate nandGate1 (.a(a), .b(b), .y(y));
 endmodule

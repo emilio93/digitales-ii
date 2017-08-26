@@ -45,15 +45,13 @@ module notGate (
 
   // contador de disparos de la compuerta
   integer c;
-  initial begin
-    c = 0;
-  end
+  initial c = 0;
 
   assign #(tpdmin:tpdmax:tpdmax) nota = ~a;
 
   always @(nota) begin
     c=c+1;
-    $display("Potencia disipada por compuerta NOR: %f nW", c * Cl * Vcc);
+    $display("    Potencia disipada por el inversor: %f nW", c * Cl * Vcc);
   end
 
 endmodule
