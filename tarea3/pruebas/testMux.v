@@ -29,44 +29,46 @@ module testMux;
     $dumpvars(0, testMux);
   end
 
-  reg a = 0;
-  reg b = 0;
-  reg temp;
+  reg s, notoe;
+  reg [1:0] a;
+  wire y;
 
-  parameter tpdm = 800;  //min, same for high and low,, T = –40°C to 85°C, vcc ~ 3.3
-  parameter tpdM = 3800; //max, ... , this will be the typical, as we're modeling for a worst case scenario
-  wire out;
+  realtime inicio, retardo;
 
   initial begin
-    $monitor("%t | %b | %b | %b", $time, a, b, out );
+    inicio = $realtime;
+    $monitor("%t | %b  | %b  | %b |  %b  | %b | %f ns", $time, s, a[0], a[1], notoe, y, retardo);
 
-    $display("\nTest para el MUX");
-    $display("----------------\n");
-    $display("              Tiempo | A | B | OUT");
-    $display("---------------------+---+---+----");
+    $display("------------------------------------------");
+    $display("Test para el MUX");
+    $display("---------------------+----+----+---+-----+---+--------");
+    $display("              Tiempo | a1 | a2 | s | ~oe | y | Retardo");
+    $display("---------------------+----+----+---+-----+---+--------");
 
-    # 4000 a = 1;
-    $display("Output starts in 1 (after delay), this shouldn't change it");
-    # 4000 b = 1;
-    $display("!(1&1) = 0");
-    # 4000 b = 1'bx;
-    $display("!(1&x) = x");
-    # 4000 a = 1'bx;
-    $display("!(x&x) = x");
-    # 4000 a = 0;
-    $display("!(0&x) = 1");
-    # 4000 a = 0; b = 1;
-    $display("Testing time requirements.");
-    # 2000 a = 1; b = 1;
-    # 4000 $finish;
+    # 1000 s = 0;
+    # 0 notoe = 0;
+    # 0 a = 2'b00;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 s = 1;
+    # 0 notoe = 0;
+    # 0 a = 2'b00;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 s = 1;
+    # 0 notoe = 1;
+    # 0 a = 2'b00;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 $finish;
   end
 
-  always @ (a,b) begin
-    temp = !( a & b );
-    #(tpdm:tpdM:tpdM);
-    if( !( a & b ) !== temp) begin
-      $display("\n\n******ERROR: Time requirements not satisfied. Output is undefined.*******\n at interval:%t -%t\n\n", $time-(tpdm:tpdM:tpdM),$time);
-      $finish;
-    end
+  always @ (y) begin
+    retardo = $realtime-inicio;
   end
+
+  mux mux1 (.s(s), .a(a), .notoe(notoe), .y(y));
 endmodule

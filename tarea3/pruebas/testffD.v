@@ -20,53 +20,98 @@
  * SOFTWARE.
  */
 
-`include "modulos/mux.v"
+`include "modulos/ffD.v"
 `timescale 1ns/1ps
-module testMux;
+module testFfD;
   initial begin
-    $display ("testMux");
-    $dumpfile("tests/testMux.vcd");
-    $dumpvars(0, testMux);
+    $display ("testFfD");
+    $dumpfile("tests/testFfD.vcd");
+    $dumpvars(0, testFfD);
   end
 
-  reg a = 0;
-  reg b = 0;
-  reg temp;
+  reg d, clk, notpreset, notclear;
+  wire q, notq;
 
-  parameter tpdm = 800;  //min, same for high and low,, T = –40°C to 85°C, vcc ~ 3.3
-  parameter tpdM = 3800; //max, ... , this will be the typical, as we're modeling for a worst case scenario
-  wire out;
+  realtime inicio, retardo;
 
   initial begin
-    $monitor("%t | %b | %b | %b", $time, a, b, out );
+    inicio = $realtime;
+    $monitor("%t | %b | %b   | %b    | %b    | %b  | %b  | %f ns", $time, d, clk, notpreset, notclear, q, notq, retardo);
 
-    $display("\nTest para el MUX");
-    $display("----------------\n");
-    $display("              Tiempo | A | B | OUT");
-    $display("---------------------+---+---+----");
+    $display("------------------------------------------");
+    $display("Test para el Flip Flop");
+    $display("---------------------+---+-----+------+------+----+----+--------");
+    $display("              Tiempo | d | clk | ~pre | ~clr |  q | ~q | Retardo");
+    $display("---------------------+---+-----+------+------+----+----+--------");
 
-    # 4000 a = 1;
-    $display("Output starts in 1 (after delay), this shouldn't change it");
-    # 4000 b = 1;
-    $display("!(1&1) = 0");
-    # 4000 b = 1'bx;
-    $display("!(1&x) = x");
-    # 4000 a = 1'bx;
-    $display("!(x&x) = x");
-    # 4000 a = 0;
-    $display("!(0&x) = 1");
-    # 4000 a = 0; b = 1;
-    $display("Testing time requirements.");
-    # 2000 a = 1; b = 1;
-    # 4000 $finish;
+    // Se carga 0 inicialmente
+    # 0 clk = 0;
+
+    # 1000 d = 0;
+    # 0 notpreset = 1;
+    # 0 notclear = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    // Se carga 1
+    # 1000 d = 1;
+    # 0 notpreset = 1;
+    # 0 notclear = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    // se prueba notpreset
+    # 1000 d = 1'bx;
+    # 0 notpreset = 0;
+    # 0 notclear = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    // se prueba notclear
+    # 1000 d = 1'bx;
+    # 0 notpreset = 1;
+    # 0 notclear = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 1;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 clk = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 $finish;
   end
 
-  always @ (a,b) begin
-    temp = !( a & b );
-    #(tpdm:tpdM:tpdM);
-    if( !( a & b ) !== temp) begin
-      $display("\n\n******ERROR: Time requirements not satisfied. Output is undefined.*******\n at interval:%t -%t\n\n", $time-(tpdm:tpdM:tpdM),$time);
-      $finish;
-    end
+  always @ (q) begin
+    retardo = $realtime-inicio;
   end
+
+  ffD ffD1 ( .d(d), .clk(clk), .notpreset(notpreset), .notclear(notclear), .q(q), .notq(notq));
 endmodule

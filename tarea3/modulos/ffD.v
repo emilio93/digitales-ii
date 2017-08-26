@@ -22,38 +22,42 @@
 
 `timescale 1ns/1ps
 /*
-  MUX
-  SN74CBTLV3257
-  Low-Voltage 4-Bit 1-of-2 FET Multiplexer/Demultiplexer
-  http://www.ti.com/lit/ds/symlink/sn74cbtlv3257.pdf
+  Flip Flop tipo D
+  74AC11074
+  Dual D-Type Positive-Edge-Triggered Flip-Flop
+  http://www.ti.com/lit/ds/scas499a/scas499a.pdf
   @ 3.3V
-
-  Los canales son de 4 bits pero solo se implementa 1 canal.
  */
-module mux(
-  input s,
-  input [1:0] a,
-  input notoe, // not output enabled ~(OE), cuando está en 1, el mux no funciona
-  output y
+module ffD(
+  input d,
+  input clk,
+  input notpreset,
+  input notclear,
+  output q,
+  output notq
 );
-  wire s;
-  wire a;
-  wire notoe;
-  reg y;
+  wire d;
+  wire clk;
+  wire preset;
+  wire clear;
+  reg q;
+  reg notq;
 
-  parameter tpin = 0.25; // Retraso de la entrada
+  // para cambios en not preset o notclear
+  parameter tplhmin = 1.5;
+  parameter tplhtyp = 5.8;
+  parameter tplhmax = 9.3;
+  parameter tphlmin = 1.5;
+  parameter tphltyp = 6.5;
+  parameter tphlmax = 11.4;
 
-  // Propagation Delay(retraso de propagación)
-  parameter tpdmin = 1.8; // maximo de los mínimos para ir de a->y y de s->y
-  parameter tpdmax = 5.3; // maximo de los máximos para ir de a->y y de s->y
-
-  // Retraso para conectar, notoe -> y
-  parameter tenmin = 2;
-  parameter tenmax = 5.3;
-
-  // Retraso para desconectar, notoe -> y
-  parameter tdismin = 1.6;
-  parameter tdismax = 5.5;
+  // para cambios en clk
+  parameter tplhclkmin = 1.5;
+  parameter tplhclktyp = 7.7;
+  parameter tplhclkmax = 10.5;
+  parameter tphlclkmin = 1.5;
+  parameter tphlclktyp = 7.3;
+  parameter tphlclkmax = 9.7;
 
   parameter Vcc = 3.3; // V
   parameter Cl = 0.05; // nF => 50pF
@@ -61,33 +65,25 @@ module mux(
   integer c;
   initial c = 0;
 
-  // esta es la señal retrasada de la entrada
-  reg aRet;
-
-  always @ (*) begin
-    // cambio hacia desconectado
-    if (notoe) begin
-      #(tdismin:tdismax:tdismax) y = 1'bz;
-    // conectado
-    end else begin
-      // desde desconectado
-      if (a == 1'bz) begin
-        #(tpdmin:tpdmax:tpdmax) y = aRet;
-        // desde una seleccion de canal previa
-      end else begin
-        #(tpdmin:tpdmax:tpdmax) y = aRet;
-      end
+  always @ (posedge clk) begin
+    if (notpreset & notclear) begin
+      if (d) # (tplhclkmin:tplhclktyp:tplhclkmax) q = d;
+      else # (tphlclkmin:tphlclktyp:tphlclkmax) q = d;
     end
   end
 
-  // Retraso que sufre la entrada
-  always @ (a) begin
-    #tpin aRet = a;
+  always @ (*) begin
+    if (~notpreset & notclear) begin
+      #(tplhmin:tplhtyp:tplhmax) q = 1;
+    end else if (notpreset & ~notclear) begin
+      #(tphlmin:tphltyp:tphlmax) q = 0;
+    end
   end
 
-  always @ (y) begin
+  always @ (q) begin
+    notq = ~q;
     c = c+1;
-    $display("Potencia disipada por la compuerta NOR: %f", c * Cl * Vcc);
+    $display("    Potencia disipada por el Flip Flop: %f", c * Cl * Vcc);
   end
 
 endmodule

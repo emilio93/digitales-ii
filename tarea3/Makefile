@@ -20,9 +20,6 @@ compilemin:
 run:
 	@$(foreach test,$(wildcard build/test*), $(CC1) $(VPI) $(test);)
 
-view:
-	@$(foreach test,$(wildcard tests/test*.gtkw), $(CC2) $(test);)
-
 clean:
 	@rm -R build
 	@rm -R tests
