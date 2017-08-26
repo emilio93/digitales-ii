@@ -51,8 +51,6 @@ module registro32bits (
   wire [1:0] modo_interno;
 
   assign modo_interno = (modo == 2'b01) ? 2'b00 : modo;
-  for
-    assign sinint[x]=0
 
   // MSB
   registro r0(clk, enb, dir, s_in_interno[0], modo_interno, d[31:28], q[31:28], s_out_interno[0]);
@@ -74,21 +72,21 @@ module registro32bits (
   end
 
   // La información interna se debe actualizar antes del flanco positivo
-  always @ (*) begin
-    s_in_interno[0] = (modo == 2'b01)
+  always @ (negedge clk) begin
+    s_in_interno[0] <= (modo == 2'b01)
                         ? dir ? q[0] : q[27]
                         : dir ? s_in : q[27];
 
-    s_in_interno[1] = dir ? q[28] : q[23];
-    s_in_interno[2] = dir ? q[24] : q[19];
-    s_in_interno[3] = dir ? q[20] : q[15];
-    s_in_interno[4] = dir ? q[16] : q[11];
-    s_in_interno[5] = dir ? q[12] : q[7];
-    s_in_interno[6] = dir ? q[8] : q[3];
+    s_in_interno[1] <= dir ? q[28] : q[23];
+    s_in_interno[2] <= dir ? q[24] : q[19];
+    s_in_interno[3] <= dir ? q[20] : q[15];
+    s_in_interno[4] <= dir ? q[16] : q[11];
+    s_in_interno[5] <= dir ? q[12] : q[7];
+    s_in_interno[6] <= dir ? q[8] : q[3];
 
-    s_in_interno[7] = (modo == 2'b01)
+    s_in_interno[7] <= (modo == 2'b01)
                         ? dir ? q[4] : q[31]
                         : dir ? q[4] : s_in;
-  end
 
+  end
 endmodule
