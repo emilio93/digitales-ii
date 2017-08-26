@@ -61,5 +61,5 @@ module testNotGate;
     retardo = $realtime-inicio;
   end
 
-  notGate notGate1 (.a(a), .nota(y));
+  notGate notGate1 (.a(a), .y(y));
 endmodule

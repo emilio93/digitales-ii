@@ -29,29 +29,28 @@
   http://www.ti.com/lit/ds/symlink/sn74ahc1g04.pdf
  */
 module notGate (
-  input a,     // entrada es a
-  output nota  // salida es no a
+  input a,  // entrada es a
+  output y  // salida es no a
 );
 
   // parámetros del componente
-  parameter tpdmin = 5;
-  parameter tpdmax = 7.1;
-  parameter Cl = 0.0015;
-  parameter Vcc = 3.3;
+  parameter tpdmin = 5;   // ns, máximo de los mínimos
+  parameter tpdmax = 7.1; // ns, máximo de los máximos
+
+  parameter Vcc = 3.3;   // V
+  parameter Cl = 0.0015; // nF, 15pF
 
   // la compuerta not es lógica combinacional
-  wire a;
-  wire nota;
+  wire a, y;
 
   // contador de disparos de la compuerta
   integer c;
   initial c = 0;
 
-  assign #(tpdmin:tpdmax:tpdmax) nota = ~a;
+  assign #(tpdmin:tpdmax:tpdmax) y = ~a;
 
-  always @(nota) begin
+  always @ (y) begin
     c=c+1;
     $display("    Potencia disipada por el inversor: %f nW", c * Cl * Vcc);
   end
-
 endmodule

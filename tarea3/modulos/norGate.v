@@ -35,23 +35,22 @@ module norGate (
   output y  // salida
 );
 
-  parameter tpdmin = 8.1;  // ns
-  parameter tpdmax = 11.4; // ns
+  parameter tpdmin = 8.1;  // ns, máximo de los mínimos
+  parameter tpdmax = 11.4; // ns, máximo de los máximos
 
   parameter Vcc = 3.3; // V
   parameter Cl = 0.05; // nF, 50pF
 
-  wire a, b;
-  wire y;
+  // solo lógica combinacional
+  wire a, b, y;
 
   integer c;
   initial c=0;
 
-  assign #(tpdmin:tpdmax:tpdmax) y = !(a || b);
+  assign #(tpdmin:tpdmax:tpdmax) y = !(a | b);
 
-  always @(y) begin
+  always @ (y) begin
     c=c+1;
     $display("     Potencia disipada por la compuerta NOR: %f", c * Cl * Vcc);
   end
-
 endmodule
