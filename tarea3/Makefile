@@ -1,0 +1,22 @@
+DIRS = build tests
+CC = iverilog
+CC1 = vvp
+CC2 = gtkwave
+VPI = -M ~/.local/install/ivl/lib/ivl
+MAKE_FOLDERS := $(shell mkdir -p $(DIRS))
+
+all:
+	@$(foreach test,$(wildcard pruebas/test*.v), $(CC) -o build/$(subst pruebas/,,$(subst .v,,$(test))) $(test) -Ttyp -g specify;)
+
+compile:
+	@$(foreach test,$(wildcard pruebas/test*.v), $(CC) -o build/$(subst pruebas/,,$(subst .v,,$(test))) $(test) -Ttyp -g specify;)
+
+run:
+	@$(foreach test,$(wildcard build/test*), $(CC1) $(VPI) $(test);)
+
+view:
+	@$(foreach test,$(wildcard tests/test*.gtkw), $(CC2) $(test);)
+
+clean:
+	@rm -R build
+	@rm -R tests
