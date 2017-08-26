@@ -45,21 +45,34 @@ module testMux;
     $display("              Tiempo | a1 | a2 | s | ~oe | y | Retardo");
     $display("---------------------+----+----+---+-----+---+--------");
 
+
     # 1000 s = 0;
+    # 0 a = 2'b10;
     # 0 notoe = 0;
-    # 0 a = 2'b00;
     # 0 retardo = 0;
     # 0 inicio = $realtime;
 
     # 1000 s = 1;
+    # 0 a = 2'b10;
     # 0 notoe = 0;
-    # 0 a = 2'b00;
     # 0 retardo = 0;
     # 0 inicio = $realtime;
 
     # 1000 s = 1;
+    # 0 a = 2'b01;
+    # 0 notoe = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 s = 0;
+    # 0 a = 2'b01;
+    # 0 notoe = 0;
+    # 0 retardo = 0;
+    # 0 inicio = $realtime;
+
+    # 1000 s = 0;
+    # 0 a = 2'b01;
     # 0 notoe = 1;
-    # 0 a = 2'b00;
     # 0 retardo = 0;
     # 0 inicio = $realtime;
 

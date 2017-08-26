@@ -94,6 +94,8 @@ module testNorGate;
     # 0 retardo = 0;
     # 0 inicio = $realtime;
     $display("1 nor 1 = 0");
+
+    # 1000 $finish;
   end
 
   always @ (y) begin

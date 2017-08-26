@@ -94,6 +94,8 @@ module testNandGate;
     # 0 retardo = 0;
     # 0 inicio = $realtime;
     $display("1 nand 1 = 0");
+
+    # 1000 $finish;
   end
 
   always @ (y) begin
