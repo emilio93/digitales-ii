@@ -20,24 +20,90 @@
  * SOFTWARE.
  */
 
+
+// Se utiliza el archivo modulos/ffD.v (ruta relativa a de donde se corre la
+// prueba)
 `include "modulos/ffD.v"
+
+// Escala de tiempo indica que la medida de tiempo es un nanosegundo (1ns=1e-9s)
+// y la mínima división de tiempo es un picosegundo (1ps=1e-12s).
+// Esto significa que la simulación realizara un cálculo del estado del circuito
+// cada 1ps, y que se hagan 1000 (1000ps=1ns)de estos cada unidad de tiempo.
 `timescale 1ns/1ps
+
+/*
+  Módulo testFfD
+
+  Este módulo prueba el componente descrito por el módulo ffD.
+  Este módulo indica que se escribira un archivo en tests/testFfD.vcd con los
+  resultados de la prueba (se puede abrir con gtkwave).
+
+  Para la prueba se inicializa un módulo ffD con señales de entrada controladas
+  a través del tiempo para obtener los resultados en las salidas en esos mismos
+  instantes de tiempo.
+
+  Las entradas del ffD(que instanciado se llama ffD1) son: d, clk, notpreset,
+  notclear.
+  Las salidas son q, notq.
+  Las salidas deseadas pueden obtenerse de ver la hoja del fabricante que se
+  indica en el archivo para el módulo ffD. Se utilizan los mismos nombres que
+  utiliza la hoja del fabricante para las distintas señales.
+
+  La secuencia de entradas se encuentra en el último bloque initial.
+ */
 module testFfD;
+
+  // Se imprime el nombre del módulo y
   initial begin
     $display ("testFfD");
     $dumpfile("tests/testFfD.vcd");
     $dumpvars(0, testFfD);
   end
 
+  // Las entradas del ffD son todas reg debido a que son
+  // controladas a lo largo del tiempo.
   reg d, clk, notpreset, notclear;
+
+  // Las salidas están atadas al módulo ffD, este es quien
+  // define su valor, por lo que en el exterior no se tiene manera
+  // de modificarlas. Por eso se definen wires.
   wire q, notq;
 
+  // Para medir el tiempo de las transiciones se mide siempre
+  // la diferencia del tiempo en que inicio el cambio y en el
+  // que acabó.
   realtime inicio, retardo;
 
-  initial begin
-    inicio = $realtime;
-    $monitor("%t | %b | %b   | %b    | %b    | %b  | %b  | %f ns", $time, d, clk, notpreset, notclear, q, notq, retardo);
+  // Instancianción del módulo ffD, como ffD1. Las entradas
+  // y salidas son las que se definieron previamente.
+  ffD ffD1 (
+    .d(d),
+    .clk(clk),
+    .notpreset(notpreset),
+    .notclear(notclear),
+    .q(q),
+    .notq(notq)
+  );
 
+  // Para medir el tiempo de retardo de la señal
+  // entre las entradas y la salida, se le resta al
+  // tiempo que inicio la transición, el tiempo actual
+  // que sucede una vez que la salida q haya terminado
+  // su transición.
+  //
+  // El tiempo inicio se reasigna cada vez que se cambian
+  // entradas al módulo.
+  always @ (q) begin
+    retardo = $realtime-inicio;
+  end
+
+  initial begin
+
+    // imprimir cada vez que cambia alguno de los elementos indicados.
+    $monitor("%t | %b | %b   | %b    | %b    | %b  | %b  | %f ns",
+            $time, d, clk, notpreset, notclear, q, notq, retardo);
+
+    // indicar que se trata de los tests para el flip flop.
     $display("------------------------------------------");
     $display("Test para el Flip Flop");
     $display("---------------------+---+-----+------+------+----+----+--------");
@@ -109,9 +175,4 @@ module testFfD;
     # 1000 $finish;
   end
 
-  always @ (q) begin
-    retardo = $realtime-inicio;
-  end
-
-  ffD ffD1 ( .d(d), .clk(clk), .notpreset(notpreset), .notclear(notclear), .q(q), .notq(notq));
 endmodule
