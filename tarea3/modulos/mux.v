@@ -86,9 +86,8 @@ module mux(
   end
 
   // incrementar contador
-  always @ (y) begin
+  always @ (y) begin  
     c = c+1;
     $display("    Potencia disipada por el MUX: %f", c * Cl * Vcc);
   end
-
-endmodule
+endmodule // mux

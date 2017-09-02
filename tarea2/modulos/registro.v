@@ -69,7 +69,7 @@ module registro (
       else if (modo == 2'b01) q <= dir ? {q[0], q[3:1]} : {q[2:0], q[3]};
 
       // modo de carga en paralelo
-      else if (modo == 2'b10) q <= d;
+      else if (modo == 2'b1x) q <= d;
     end
   end
 endmodule
