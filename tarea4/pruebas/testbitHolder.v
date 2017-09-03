@@ -1,9 +1,12 @@
-`ifndef mux
+`ifndef bitHolder
   `include "modulos/bitHolder.v"
 `endif
 
-`timescale 1ns/100ps
+`timescale 1ns/1ps
 
+/*
+El módulo testbitHolder se encarga de
+ */
 module testbitHolder ();
 
   reg s_der, s_izq, d_n, dir, clk;

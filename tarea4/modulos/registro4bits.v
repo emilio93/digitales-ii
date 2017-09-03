@@ -31,8 +31,6 @@ module registro4bits (
   output s_out        // bit que sale cuando modo=00, es 0 para modo!=00
 );
 
-
-
   // El bitHolder 0 es el LSB
   bitHolder bitHolder0(
     .s_der(s_der),
@@ -44,6 +42,35 @@ module registro4bits (
     .s_out(s_out)
   );
 
+  bitHolder bitHolder1(
+    .s_der(s_der),
+    .s_izq(s_izq),
+    .d_n(d_n),
+    .dir(dir),
+    .modo(modo),
+    .clkenb(clkenb),
+    .s_out(s_out)
+  );
+
+  bitHolder bitHolder2(
+    .s_der(s_der),
+    .s_izq(s_izq),
+    .d_n(d_n),
+    .dir(dir),
+    .modo(modo),
+    .clkenb(clkenb),
+    .s_out(s_out)
+  );
+
+  bitHolder bitHolder3(
+    .s_der(s_der),
+    .s_izq(s_izq),
+    .d_n(d_n),
+    .dir(dir),
+    .modo(modo),
+    .clkenb(clkenb),
+    .s_out(s_out)
+  );
 
 
 endmodule // registro4bits

@@ -1,4 +1,5 @@
 
+
 // Modulo ternarioDoble
 // Representa la línea
 // y = s2 ? c : (s1 ? b : a); // *
@@ -26,11 +27,12 @@ module ternarioDoble (
   // y la entrada en bajo del mux2.
   wire mux1__mux2;
 
+  parameter notoe = 1'b0;
 
   // Decide con s1 entre a(0) y b(1)
   mux mux1(
     .s(s1),
-    .a({a, b}),
+    .a({b, a}),
     .notoe(notoe),
     .y(mux1__mux2)
   );
@@ -38,7 +40,7 @@ module ternarioDoble (
   // Decide con s2 entre a, b(0) y c(1), finalmente da la salida.
   mux mux2(
     .s(s2),
-    .a({mux1__mux2, c}),
+    .a({c, mux1__mux2}),
     .notoe(notoe),
     .y(y)
   );
