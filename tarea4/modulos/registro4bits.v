@@ -1,16 +1,3 @@
-`ifndef mux
-  `include "../tarea3/modulos/mux.v"
-`endif
-`ifndef ffD
-  `include "../tarea3/modulos/ffD.v"
-`endif
-`ifndef bitHolder
-  `include "./bitHolder.v"
-`endif
-`ifndef serialOcontiguo
-  `include "./serialOcontiguo.v"
-`endif
-
 /*
   Modulo registro4bits
 
@@ -34,63 +21,85 @@ module registro4bits (
   output s_out        // bit que sale cuando modo=00, es 0 para modo!=00
 );
   parameter bits = 4;
-  wire [bits-1:0] s_out_bit;
   wire socMSBout, socLSBout;
   wire clkenb;
 
   serialOcontiguo socMSB(
-    .usual(s_out_bit[0]),
+    .usual(q[0]),
     .s_in(s_in),
     .modo(modo),
     .out(socMSBout)
   );
 
   serialOcontiguo socLSB(
-    .usual(s_out_bit[bits-1]),
+    .usual(q[3]),
     .s_in(s_in),
     .modo(modo),
     .out(socLSBout)
   );
 
+  enabler enabler1(
+    .clk(clk),
+    .enb(enb),
+    .eclk(clkenb)
+  );
+
   // El bitHolder 0 es el LSB
   bitHolder bitHolder0(
     .s_der(socLSBout),
-    .s_izq(s_out_bit[1]),
+    .s_izq(q[1]),
     .d_n(d[0]),
     .dir(dir),
     .modo(modo),
     .clkenb(clkenb),
-    .s_out(s_out_bit[0])
+    .s_out(q[0])
   );
 
   bitHolder bitHolder1(
-    .s_der(s_out_bit[0]),
-    .s_izq(s_out_bit[2]),
-    .d_n(d[0]),
+    .s_der(q[0]),
+    .s_izq(q[2]),
+    .d_n(d[1]),
     .dir(dir),
     .modo(modo),
     .clkenb(clkenb),
-    .s_out(s_out_bit[1])
+    .s_out(q[1])
   );
 
   bitHolder bitHolder2(
-    .s_der(s_out_bit[1]),
-    .s_izq(s_out_bit[3]),
-    .d_n(d[0]),
+    .s_der(q[1]),
+    .s_izq(q[3]),
+    .d_n(d[2]),
     .dir(dir),
     .modo(modo),
     .clkenb(clkenb),
-    .s_out(s_out_bit[2])
+    .s_out(q[2])
   );
 
   bitHolder bitHolder3(
-    .s_der(s_out_bit[1]),
+    .s_der(q[2]),
     .s_izq(socMSBout),
-    .d_n(d[0]),
+    .d_n(d[3]),
     .dir(dir),
     .modo(modo),
     .clkenb(clkenb),
-    .s_out(s_out_bit[3])
+    .s_out(q[3])
+  );
+
+  wire [1:0] not_modo;
+  wire is_modo_00;
+  
+  notGate notModo0(.a(modo[0]), .y(not_modo[0]));
+  notGate notModo1(.a(modo[1]), .y(not_modo[1]));
+
+  enabler modoCheck(.clk(not_modo[0]), .enb(not_modo[1]), .eclk(is_modo_00));
+
+  ternarioDoble salida(
+    .a(q[3]),
+    .b(q[0]),
+    .c(1'b0),
+    .s1(dir),
+    .s2(not_modo0),
+    .y(s_out)
   );
 
 
