@@ -1,9 +1,9 @@
-`ifndef norGate
-  `include "../tarea3/modulos/norGate.v"
-`endif
-`ifndef mux
-  `include "../tarea3/modulos/mux.v"
-`endif
+//`ifndef norGate
+//  `include "../tarea3/modulos/norGate.v"
+//`endif
+//`ifndef mux
+ // `include "../tarea3/modulos/mux.v"
+//`endif
 
 /*
   Modulo serialOcontiguo
@@ -11,8 +11,8 @@
 module serialOcontiguo(
   input usual,
   input s_in,
-  input modo[1:0],
-  output out,
+  input [1:0] modo,
+  output out
 );
 
   wire usual, s_in, out;
@@ -21,14 +21,14 @@ module serialOcontiguo(
   wire outNor;
   wire outMux;
   wire [1:0] canalesMux;
-  assign canalesMux[0] = s_in;
-  assign canalesMux[1] = usual;
+  assign canalesMux[1] = s_in;
+  assign canalesMux[0] = usual;
 
-  paramenter notoe = 1'b0;
+  parameter notoe = 1'b0;
 
   norGate modeNor(
-	 .a(mode[1]),
-	 .b(mode[0]),
+	 .a(modo[1]),
+	 .b(modo[0]),
 	 .y(outNor)
 );
 
@@ -38,6 +38,8 @@ module serialOcontiguo(
 	  .notoe(notoe),
 	  .y(outMux)		  
 );
+
+assign out = outMux;
 
 endmodule//serialOcontiguo
 
