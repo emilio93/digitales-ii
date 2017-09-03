@@ -1,0 +1,343 @@
+Fente del tutorial:
+http://vol.verilog.com/VOL/main.htm
+#
+
+Verilog es un HDL, lenguaje de descripción de hardware, esto significa que se usa para descibir cualquier sistema/circuito digital en diversos niveles de abstracción desde unidades logico combinacionales hasta simples compuertas
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>           TEORIA         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+Hay dos estructuras principales: el module y el port,
+un modulo es una unidad logica, el port es como una señal entre modulos, puede ser input, output o inout.
+
+Jerarquía de módulos: 
+		 padre
+		/    |
+	   hijo1    hijo2
+	  /    |       |
+	hoja1 hoja2   hoja3
+
+el módulo más abajo a la derecha es: padre.hijo2.hoja3
+el modulo padre no instancia ningun modulo en su interior, el compilador lo identifica por esto,
+delcaracion de un modulo:
+
+module tipo(port1, port2, port3, port4);//modulo padre con tipo y nombre "tipo"
+	input port1, port4;
+	output port2;
+	inout port3;
+
+	latch nombre(ent1, ent2, sal2, sal3); //instancia de tipo latch
+
+endmodule;
+
+module latch(entrada1, entrada2, salida2, salida3); 
+	output salida2;
+	input entrada2, entrada1;
+	output salida3;
+endmodule
+
+Al instanciar un modulo puedo dejar en blanco puertos que no me interesa usar.
+también se pueden poner los puertos así: .nomberUsado(nombreDePuertoEnDefinicion) de manera que no importa el orden en que se llamen.No se pueden mezclar ambos tipos de llamadas.
+Intervalo de vida de variables y funciones es igual que en otro lengauje.
+
+Un modulo se compone de:
+->>>parametros: constantes, si un módulo foo tiene 3 parámetros a éstos se les puede dar un valor al instanciar el modulo de la siguiente manera: foo #(10,20,30) f1 ( in1, out1); ,comando para redefinir solo un parametro determinado, se usa fuera de la instancia: defparam mb1.par2 = 5; 
+->>>nets: son como cables en un circuito, se declaran así:
+net_type(wire,tri,wand, triand, trior, supply1,suppl0) range osea[MSB:LSB] ] [delay3 entre cambio en señal y cuando se percibe] list_of_net_identifiers(_$ y alfanumerico) ; ,los bits en un net pueden ser 1,0,x,z
+->>>>registers: guardan un valor, se declara así:
+reg [range [MSB:LSB]] list_of_register_identifiers; 
+o integer nombre; //32bits con signo
+o time nombre;//64bits uint
+o real nombre;
+o realtime nombre;//real y realtime son lo mismo 64 bit ufloat
+los bits en un reg pueden ser 1,0,z,x
+un arreglo de registros es un memoria
+->>>>primitives: son tipos de modulos predefindos: output(and, nand,or, nor, xor,xnor), input(buf,not), tristate(bufif0, bufif1, notif1,notif0) , pull(pullup, pulldown), switches (modelado a nivel de transistores) (cmos, rcmos,nmos,rnmos,pmos,rpmos), switches bidireccionales(tran, rtran,tranif0,tranif1,rtranif0,rtranif1)
+->>>>instances:
+->>>>continuous assignments: descibren como se mueve la información, sintaxis: assign [drive_strength] [delay3] list_of_net_assignments ; lo que halla a la izq de un assing tiene que ser un net un registro no porque un registro toma valores en tiempos discretos mientras que un net toma un valor instantaneamente y asincronomamente. Output ports se comportan igual que un assing. En modulos instanciados ports tipo input son como el lado derecho de un assing y ports tipo output como el lado izquierdo.
+->>>>procedural blocks: initial, always presentan ejecuciones secuenciales, puede haber los que se quiera. Sintaxis: initial <statement>     always <statement>, estatement puede ser compuesto. Todos empizan ejecucion en tiempo 0
+->>>>task/function definitions: se declaran dentro de modulos. Tasks se usan en procedural blocks y pueden tener argumentos, finctions se usan como operandos de expresiones donde sean necesarios, pueden tener argumentos solo input, no pueden tener retrasos. Las tasks pueden estar solas pero las funciones no.
+sintaxis:
+task nombre;
+
+variables...;
+
+begin
+.
+.
+.
+end
+endtask
+
+function nombre
+
+input nombreInput
+
+begin
+.
+.
+.
+end
+endfunction;
+
+Las primitivas se instancian como cualquier otro modulo, no hace falta el nombre. And or y xor tienen de primer port la salida y los demas son entradas. Un modulo se puede hacer solo con primitivas o solo con assignments.
+#3 es un delay de 3 unidades de tiempo.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>              SINTAXIS DEL LENGUAJE          <<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+statements componen el lenguaje verilog, se componen de tokens.
+statements son separados por ; sin embargo grupos de statements no.
+Sinstaxis de verilog es como una mezcla entre C y pascal.
+Tokens:
+espacio,
+comentarios,
+operadores,
+constantes,
+indetificadores, pueden empezar con backslash y contener cualquier caracter.
+palabrasClave,
+tasks y funciones
+operadores:
+
+{}, {{}} 	concatenation, replication
+
+Aritmeticos:
++ - * /
+% 	modulus
+
+Relacionales:
+< > >= <=
+==	logical equality
+!= 	logical inequality
+=== 	case equality
+!== 	case inequality
+
+Lógicos:
+!	not
+&&	and
+||	or
+
+Bit-wise:
+~ 	bit-wise negation
+& 	bit-wise and
+| 	bit-wise inclusive or 
+^ 	bit-wise exclusive or (xor)
+^~ ~^ 	bit-wise equivalence (xnor)
+
+Reduccion:
+& 	reduction and:	a& (and con todos los bits de a)
+~& 	reduction nand:	~&a (negado de and con todos los bits de a)
+| 	reduction or:	|a (or con todos los bits de a)
+~| 	reduction nor:	~|a  ~(or all bits of a)
+^ 	reduction xor:	^a (xor all bits of a)
+~^ ^~ 	reduction xnor:	~^a  ~(xor all bits of a)
+
+Shift:
+<< 	left shift
+>> 	right shift
+
+Condicional:
+?: 	conditional, operador ternario: valor? siTrue:siFalse
+
+constantes usadas:
+
+strings: "esto es un string"
+real: double precision, escribir un numero a ambos lados del punto(tiene decimales), si se pasa a int se redondea,se pueden escribir en notación científica.
+enteros: x,z o base: 'd, 'b, 'h, 'o, puedo poner "_" en el numero y no pasa nada. Por ejempo varaible: = 12'b1111_1010_0001
+12'h3	is equivalent to 	12'b000000000011
+12'h3x	is equivalent to 	12'b00000011xxxx
+12'bx	is equivalent to 	12'bxxxxxxxxxxxx
+12'oz37	is equivalent to 	12'bzzzzzz011111
+
+These are the keywords in Verilog:
+
+always 	inout 	rtranif0 	and 	input 	rtranif1
+assign 	integer 	scalared 	begin 	join 	small
+buf 	large 	specify 	bufif0 	macromodule 	specparam
+bufif1 	medium 	strength 	case 	module 	strong0
+casex 	nand 	strong1 	casez 	negedge 	supply0
+cmos 	nmos 	supply1 	deassign 	nor 	table
+default 	not 	task 	defparam 	notif0 	time
+disable 	notif1 	tran 	edge 	or 	tranif0
+else 	output 	tranif1 	end 	parameter 	tri
+endcase 	pmos 	tri0 	endmodule 	posedge 	tri1
+endfunction 	primitive 	triand 	endprimitive 	pull0 	trior
+endspecify 	pull1 	trireg 	endtable 	pulldown 	vectored
+endtask 	pullup 	wait 	event 	rcmos 	wand
+for 	real 	weak0 	force 	realtime 	weak1
+fork 	reg 	while 	function 	release 	wire
+highz0 	repeat 	wor 	highz1 	rnmos 	xnor
+if 	rpmos 	xor 	initial 	rtran 	 
+
+system functions son funciones predefinidas en verilog, inician con $.
+tasks ej:
+$display - Used to print output on the standard output device and the simulation log file.
+$monitor - Used to trace all value changes of the arguments.
+$readmem - Read in initial values to a memory.
+$stop - Temporarily suspends simulation to enter the user interface to the simulation.
+$finish - Terminate simulation. 
+
+functions ej:
+$time - Return the current simulation time (64 bits).
+$stime - Return the current simulation time as a 32-bit number.
+$random - Return a 32-bit random nnumber.
+$bitstoreal - Return the real value of the argument.
+$realtobits - Return the unsigned integer value of the real argument.
+
+
+MACROS:
+ej:
+ `define mymacro this is some text
+  ...
+  $display("`mymacro");
+  ...
+
+This would print the string
+
+  this is some text
+
+
+Tipos de datos en verilog:
+
+->>>>>scalar: puede ser: 0 -logic zero (false),1 -logic one (true),x - unknown value,z - high-impedance value
+regs y nets son scalar por default pero pueden declararse como vectores. También tienen nivel de potencia, si no se especifica el nivel de potencia por defecto es strong.
+->>>>>vector: declaración:    wire [1:48] system_bus; wire [0:7] bus_slice0, bus_slice1, bus_slice2; pueden concatenarse de la sigueine manera :
+    vec[1:20] = {4{5'b10110}};
+    vec[1:5] = {1'b1, 2{vec[6:7]}}; 
+operaciones en vectores:
+Bit-Select: vec[3]
+Part-Select
+Concatenation
+Repeat Concatenation
+integer
+real
+time  
+
+
+->>>>>Trireg nets, son dispositivos que guardan carga con charge_strength
+
+nivel de potencia puede ser:
+(strength0, strength1)
+strength0	strength1
+supply0		supply1
+strong0		strong1
+pull0		pull1
+weak0		weak1
+highz0		highz1
+
+Una memory es un arreglo de registros, se declaran asi:
+reg [range] identifier range;
+reg [7:0] memdata[0:255]; 	// 256 8-bit registers
+reg [8*6:1] strings[1:10]; 	// 10 6-byte strings
+reg membits [1023:0]; 	// 1024 1-bit registers
+las memorias se accesan igual que los vectores, la memoria no puede ir al lado izq de un assign.
+Para accesar a un valor en la memoria primero hay que accesar al registro deseado y luego a la entrada de ese registro.i
+El indicador de un net no puede empezar on número ni $, si es escaped tiene que terminar con espacio.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                  SIMULACIONES                  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+Una expresión es una combinación de operandos y operadores que produce un único resultado en función de sus operandos.
+Expresiones escalares tienen un valor de un único bit.
+Las expresiones puede usarse para crear retardos en instancias
+de la siguiente manera:
+Donde se usa solo un valor para paso de 0 a 1 (subida) y uno para paso de 1 a 0 (bajada) al simular,
+si solo se pone una tripleta, se asume que los valores de bajada y subida son iguales.
+
+#(min_subida: tip_subida: max_subida ,min_bajada: tip_bajada: max_bajada)
+Ej: assign #(5:10:15) sum = a + b; 
+
+Operandos posibles de una expresión y ejemplos de cada uno:
+
+
+    constant:
+ 15
+32'hdeadbeef
+1.02e23
+"hello there" 
+
+    net:
+w1
+muxout
+cntrl
+
+    register:
+r1
+delayVal
+sel
+
+    bit-select:
+muxout[6]
+delayVal[31]
+
+    part-select:
+muxout[0:3]
+muxout[2:5]
+
+    concatenation:
+{w1, muxout[1:7], sel}
+{r1, 3{w1},
+delayVal[31:28]}
+
+    memory element:
+mem[10]
+mem[muxout]
+	
+    function call:
+func(w1,r1)
+$time 
+
+Los operadores es escriben con 1,2 o 3 caracteres y son unarios(un solo operando) o binarios(dos operandos) dependiendo del contexto.
+En general el tamaño en bits de un resultado es el tamaño de los operandos. Si los operandos son de diferente tamaño se usa el tamaño del más grande. Si es una concatenacion resulta la suma de los tamaños.
+O son del tamaño establecido por el tamaño de la variable donde se guarda el resultado.
+
+Ej: 
+si a = 1'b1
++a es igual a 0
+-a es igual a 0
+operando y resultado de tamaño 1
+
+Tiempo en simulación:
+el tiempo empieza en cero y es un valor positivo (entero de 64 bits), los retardos se suman al tiempo actual de ejecución.
+
+Retardos:
+se denotan con #
+Se pueden asignar a un net antes de su nombre al instanciarlo o en un assign al lado izq.
+Pueden ponerse dentro de procedural statements (always...) ponerse en función de otras variables si están dentro de procedural statements, sino tienen que ser constantes (se compilan):
+ej: #periodo/2 //(se determina al ejecutar)
+
+Tipos de retardo:
+son 3
+
+#(rise_delay, fall_delay, turnoff_delay)
+    rise_delay          0, x, or z -> 1
+    fall_delay          1, x, or z -> 0 
+    turnoff_delay       0, 1, or x -> z 
+Si el valor pasa de lo que sea a x, se usa el retardo menor.
+Si no necesito poner turnoff solo pongo:
+#(rise_delay, fall_delay) //en caso de pasar a z o x se usa el mas pequeño de ambos.
+and, nand, or, nor, xor, xnor, buf, not :todas estas primitivas solo toman rise and fall delays no pasan a ser z nunca.
+Si solo se pone un delay se usa para todas las transisiones. (Solo se usa un delay en procedural code).
+
+Verilog es un lenguaje de simulacion de tiempos discretos como GPSSm Simula y Simscript.
+Funciona con una lista de eventos que contiene punteros a eventos y su tiempo asociado.
+Funciona así: si el tiempo actual es menor al del siguiente evento avanzar a ese tiempo y ejecutarlo.
+Toda accion se ejecuta en un instante, si queremos que sea un proceso, la dividimos en partes con su respectivo retardo cada una.
+
+Eventos: se determinan explícitamente en el código con @
+En simulación se esperará a que ocurra un evento para ejecutar las instrucciones descritas dentro.
+Las simulaciones intentan ser en paralelo como los circuitos muchas veces son asíncronos en la vida real.Sin embargo recordemos que los procesadores son secuenciales asi que realmente las acciones en paralelo en el simulador suceden secuencialmente en el procesador de la computadora que usamos.
+Hay que tener esto presente porque si tenemos codigo sin orden o en paralelo donde una accion determina un operando de otra accion, dependera del procesador el resultado de dicha operación, lo cual podria afectar nuestra simullación. (A esto se le conoce como: Race condition)
+Ej:
+
+always @(posedge clock)         always @(posedge clocik)
+        dff1 = f(x);                    dff2 = dff1;
+
+No sabemos con certeza qué valor tomará dff2, puede ser f(x) o dff1 (viejo). Depende de la ejecución en nuestro procesador.
+Todo net y reg tiene que tener un valor inicial, por default es x.
+
+Control de eventos:
+
+wait(x!=y); //ejecuta lo que sigue hasta que x sea diferente de y
+
+
+bookmark 37  de cap 3
