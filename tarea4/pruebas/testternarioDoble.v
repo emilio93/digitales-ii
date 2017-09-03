@@ -13,9 +13,14 @@ el módulo ternarioDoble en todas sus combinaciones.
  */
 module testternarioDoble ();
 
+  // entradas controladas del módulo de prueba ternarioDoble, que se llama
+  // tester.
   reg a, b, c, s1, s2, clk;
+
+  // la salida y es controlada por el módulo de prueba.
   wire y;
 
+  // se instancia el módulo.
   ternarioDoble tester(
     .a(a),
     .b(b),
@@ -25,8 +30,14 @@ module testternarioDoble ();
     .y(y)
   );
 
-  initial # 100 clk = 0;
+  // inicio de la señal de reloj.
+  initial # 50 clk = 0;
 
+  // frecuencia del reloj son 45 unidades de tiempo,
+  // en este caso 1ns. Esto es
+  //    45ns, 45e-9s, (1/45)e9Hz, 22.2222MHz.
+  // El tiempo de retraso máximo es levemente más corto
+  // de 44.4ns, obteniendo 22.52MHz
   always # 45 clk = ~clk;
 
   initial begin
@@ -158,17 +169,6 @@ module testternarioDoble ();
     # 150;
     @(posedge clk);
     $finish;
-  end
-
-  always @(posedge clk) begin
-    // if ($realtime > 100) begin
-    //   if (out_bit_cond != out_bit_estr) begin
-    //     $display ($time, "ERROR: esperado out_bit_cond: %b, encontrado out_bit_estr: %b", out_bit_cond, out_bit_estr);
-    //   end
-    //   if (carry_bit_cond != carry_bit_estr) begin
-    //     $display ($time, "ERROR: esperado carry_bit_cond: %b, encontrado carry_bit_estr: %b", carry_bit_cond, carry_bit_estr);
-    //   end
-    // end
   end
 
   initial
