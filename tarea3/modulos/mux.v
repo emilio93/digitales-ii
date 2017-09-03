@@ -31,13 +31,13 @@
   Los canales son de 4 bits pero solo se implementa 1 solo bit.
  */
 module mux(
-  input s,
-  input [1:0] a,
-  input notoe, // not output enabled ~(OE), cuando está en 1, el mux no funciona
+  input s,       // selecciona entre la señal a[0] y a[1] segun a[s]
+  input [1:0] a, // a[0] se selecciona con s=0 y a[1] con s=1
+  input notoe,   // not output enabled ~(OE), cuando está en 1, el mux no funciona
   output y
 );
   wire s;
-  wire a;
+  wire [1:0] a;
   wire notoe;
   reg y;
 
@@ -62,7 +62,7 @@ module mux(
   initial c = 0;
 
   // esta es la señal retrasada de la entrada
-  reg aRet;
+  reg [1:0] aRet;
 
   always @ (*) begin
     // cambio hacia desconectado
@@ -72,10 +72,10 @@ module mux(
     end else begin
       // desde desconectado
       if (a == 1'bz) begin
-        #(tpdmin:tpdmax:tpdmax) y = aRet;
+        #(tpdmin:tpdmax:tpdmax) y = aRet[s];
         // desde una seleccion de canal previa
       end else begin
-        #(tpdmin:tpdmax:tpdmax) y = aRet;
+        #(tpdmin:tpdmax:tpdmax) y = aRet[s];
       end
     end
   end
@@ -86,8 +86,8 @@ module mux(
   end
 
   // incrementar contador
-  always @ (y) begin  
+  always @ (y) begin
     c = c+1;
     $display("    Potencia disipada por el MUX: %f", c * Cl * Vcc);
   end
-endmodule // mux
+endmodule
