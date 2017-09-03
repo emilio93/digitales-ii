@@ -35,7 +35,7 @@ module testbitHolder ();
   // esto da (2*5.5+11.4)ns = 16.9ns => f = 59.17MHz para el bitHolder
   // se utiliza un retraso de 17 => 58.82MHz
   //
-  always # 27 clk = ~clk;
+  always # 37 clk = ~clk;
 
   initial begin
 
@@ -89,6 +89,64 @@ module testbitHolder ();
       dir <= 1'b0;
       s_der <= 1'b1;
       d_n <= 1'bx;
+
+    $display("Hacia la derecha");
+    $display("con s_izq = 0");
+    @(posedge clk);
+      modo <= 2'b00;
+      s_izq <= 1'b0;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
+
+    # 70
+    $display("con s_izq = 1");
+    @(posedge clk);
+      modo <= 2'b00;
+      s_izq <= 1'b1;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
+
+    // Prueba de modo en rotacion
+    # 70
+    $display("---\nModo de rotacion\n---");
+    $display("Hacia la izquierda");
+    $display("con s_der = 0");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'bx;
+      dir <= 1'b0;
+      s_der <= 1'b0;
+      d_n <= 1'bx;
+
+    # 70
+    $display("con s_der = 1");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'bx;
+      dir <= 1'b0;
+      s_der <= 1'b1;
+      d_n <= 1'bx;
+
+    $display("Hacia la derecha");
+    $display("con s_izq = 0");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'b0;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
+
+    # 70
+    $display("con s_izq = 1");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'b1;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
+
 
     # 150;
     @(posedge clk);
