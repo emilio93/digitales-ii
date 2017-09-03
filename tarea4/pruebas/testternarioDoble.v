@@ -25,9 +25,9 @@ module testternarioDoble ();
     .y(y)
   );
 
-  initial # 45 clk = 0;
+  initial # 100 clk = 0;
 
-  always # 100 clk = ~clk;
+  always # 45 clk = ~clk;
 
   initial begin
 
