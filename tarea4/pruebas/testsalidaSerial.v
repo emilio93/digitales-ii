@@ -65,7 +65,19 @@ module testsalidaSerial ();
   s_der = 0;
   s_izq = 0;
   dir = 1;
- 
+   
+  #retardos
+  modo = 2'b10;
+  s_der = 0;
+  s_izq = 0;
+  dir = 0;
+
+  #retardos
+  modo = 2'b10;
+  s_der = 0;
+  s_izq = 1;
+  dir = 0;
+
   #retardos
   modo = 2'b01;
   s_der = 1;
@@ -89,10 +101,34 @@ module testsalidaSerial ();
   s_der = 1;
   s_izq = 0;
   dir = 0;
+
+  #retardos
+  modo = 2'b00;
+  s_der = 1;
+  s_izq = 0;
+  dir = 0;
+ 
+  #retardos
+  modo = 2'b00;
+  s_der = 1;
+  s_izq = 0;
+  dir = 1;
  
   #retardos
   modo = 2'b00;
   s_der = 0;
+  s_izq = 1;
+  dir = 1;
+ 
+  #retardos
+  modo = 2'b00;
+  s_der = 1;
+  s_izq = 0;
+  dir = 0;
+ 
+  #retardos
+  modo = 2'b00;
+  s_der = 1;
   s_izq = 1;
   dir = 0;
  
@@ -114,6 +150,7 @@ module testsalidaSerial ();
   s_izq = 0;
   dir = 0;
  
+
   $finish;
   end
 

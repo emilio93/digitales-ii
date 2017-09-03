@@ -6,26 +6,32 @@ module salidaSerial (
   output s_out
 );
 
+  //añadir serialOcontiguo y mnux para compilar
   // Entradas salidas, todas son wire.
   wire [1:0] modo;
   wire s_der, s_izq, s_out, dir;
-  wire outAnd;
+  wire outMux;
+  wire [1:0] canalesMux;
+
+  assign canalesMux[0] = s_izq;
+  assign canalesMux[1] = s_der;
 
 
+//a[0] se selecciona con s0 y a[1] con s1
+parameter notoe = 1'b0;
 
-  enabler andGate(
-	  .clk(modo[0]),
-	  .enb(modo[1]),
-	  .eclk(outAnd)
+  mux derOizq(
+	  .s(dir),
+	  .a(canalesMux),
+	  .notoe(notoe),
+	  .y(outMux)
   );
 
-  ternarioDoble salida(
-	  .a(s_izq),
-	  .b(s_der),
-	  .c(1'b0),
-	  .s1(dir),
-	  .s2(outAnd),
-	  .y(s_out)
-  );
+  serialOcontiguo salida(
+	  .usual(1'b0),
+	  .s_in(outMux),
+	  .modo(modo),
+	  .out(s_out)
+);
 
 endmodule // ternarioDoble
