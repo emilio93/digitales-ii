@@ -54,7 +54,7 @@ end
 
   initial
     begin
-    $dumpfile("./testEnabler.vcd");
+    $dumpfile("./tests/testEnabler.vcd");
     $dumpvars();
     $display ("\t     tiempo | clk | enb | out ");
     $monitor             ("%t| %b    | %b     | %b ",

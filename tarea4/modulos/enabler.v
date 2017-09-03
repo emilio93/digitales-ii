@@ -1,10 +1,3 @@
-//`ifndef norGate
-//  `include "../tarea3/modulos/norGate.v"
-//`endif
-//`ifndef mux
- // `include "../tarea3/modulos/mux.v"
-//`endif
-
 /*
   Modulo enabler
  */
@@ -32,7 +25,7 @@ module enabler(
 
   notGate inverter(
 	  .a(outNand),
-	  .y(outNot)		  
+	  .y(outNot)
 );
 
 assign eclk = outNot;
