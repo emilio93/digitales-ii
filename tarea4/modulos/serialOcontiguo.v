@@ -1,9 +1,3 @@
-//`ifndef norGate
-//  `include "../tarea3/modulos/norGate.v"
-//`endif
-//`ifndef mux
- // `include "../tarea3/modulos/mux.v"
-//`endif
 
 /*
   Modulo serialOcontiguo
@@ -36,10 +30,9 @@ module serialOcontiguo(
 	  .s(outNor),
 	  .a(canalesMux),
 	  .notoe(notoe),
-	  .y(outMux)		  
+	  .y(outMux)
 );
 
 assign out = outMux;
 
 endmodule//serialOcontiguo
-

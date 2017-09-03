@@ -1,16 +1,3 @@
-`ifndef notGate
-  `include "../tarea3/modulos/notGate.v"
-`endif
-`ifndef mux
-  `include "../tarea3/modulos/mux.v"
-`endif
-`ifndef ffD
-  `include "../tarea3/modulos/ffD.v"
-`endif
-`ifndef ternarioDoble
-  `include "modulos/ternarioDoble.v"
-`endif
-
 /*
   Modulo bitHolder
  */
