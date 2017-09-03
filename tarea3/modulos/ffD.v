@@ -67,21 +67,21 @@ module ffD(
 
   always @ (posedge clk) begin
     if (notpreset & notclear) begin
-      if (d) # (tplhclkmin:tplhclktyp:tplhclkmax) q = d;
-      else # (tphlclkmin:tphlclktyp:tphlclkmax) q = d;
+      if (d) # (tplhclkmin:tplhclktyp:tplhclkmax) q <= d;
+      else # (tphlclkmin:tphlclktyp:tphlclkmax) q <= d;
     end
   end
 
   always @ (*) begin
     if (~notpreset & notclear) begin
-      #(tplhmin:tplhtyp:tplhmax) q = 1;
+      #(tplhmin:tplhtyp:tplhmax) q <= 1;
     end else if (notpreset & ~notclear) begin
-      #(tphlmin:tphltyp:tphlmax) q = 0;
+      #(tphlmin:tphltyp:tphlmax) q <= 0;
     end
   end
 
   always @ (q) begin
-    notq = ~q;
+    notq <= ~q;
     c = c+1;
     $display("    Potencia disipada por el Flip Flop: %f", c * Cl * Vcc);
   end

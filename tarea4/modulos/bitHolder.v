@@ -1,3 +1,6 @@
+`ifndef notGate
+  `include "../tarea3/modulos/notGate.v"
+`endif
 `ifndef mux
   `include "../tarea3/modulos/mux.v"
 `endif
@@ -51,15 +54,16 @@ module bitHolder (
   output s_out      // Es el número que estaba previamente en el bitHolder y
                     // sale de este.
 );
-  wire s_der, s_izq, d_n, dir, clkenb;
+  wire s_der, s_izq, d_n, dir, clkenb, clkenb_not, clkenb_ret;
   wire [1:0] modo;
 
   wire s_out;
 
-  parameter cantidad_muxes = 2;
   parameter notoe = 1'b0;
 
   wire d_in; // siguiente bit a ingresar
+
+  wire nand1Y;
 
   ternarioDoble d_n_prima(
     .a(s_der),
@@ -70,18 +74,23 @@ module bitHolder (
     .y(d_in)
   );
 
-  parameter notpreset = 1'b0;
-  parameter notclear = 1'b0;
+  parameter notpreset = 1'b1;
+  parameter notclear = 1'b1;
 
   wire notq;
 
+  // se debe agregar un retraso.
+  notGate ng1(.a(clkenb), .y(clkenb_not));
+  notGate ng2(.a(clkenb_not), .y(clkenb_ret));
+
   ffD bitValue(
-    .d(d_in),
-    .clk(clkenb),           // indica cuando cambia el estado en el flip flop
+    .d(d_in),           // valor de entrada en flanco positivo cuando
+                            // notclear y notpreset son 1.
+    .clk(clkenb_ret),       // indica cuando cambia el estado en el flip flop
                             // esto es en los flancos positivos de (clk&enb)
-    .notpreset(notpreset),  // si es 1, se carga 1 en el flip flop(asincrónico).
-    .notclear(notclear),    // si es 0, se carga 0 en el flip flop(asincrónico).
-    .q(s_out),                  // es el valor actual en el flip flop.
+    .notpreset(notpreset),  // si es 1 y notclear es 0, se carga 1 en el flip flop(asincrónico).
+    .notclear(notclear),    // si es 1 y notpreset es 0, se carga 0 en el flip flop(asincrónico).
+    .q(s_out),              // es el valor actual en el flip flop.
     .notq(notq)             // el valor negado de q
   );
 

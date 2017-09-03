@@ -1,17 +1,20 @@
 `ifndef bitHolder
-  `include "modulos/bitHolder.v"
+  `include "./modulos/bitHolder.v"
 `endif
 
 `timescale 1ns/1ps
 
 /*
-El módulo testbitHolder se encarga de
+El módulo testbitHolder se encarga de probar el módulo
+bitHolder.
  */
 module testbitHolder ();
 
-  reg s_der, s_izq, d_n, dir, clk;
+  reg s_der, s_izq, d_n, dir, clk, enb;
   reg [1:0] modo;
-  wire y;
+  wire clkenb, y;
+
+  assign clkenb = clk & enb;
 
   bitHolder tester(
     .s_der(s_der),
@@ -23,67 +26,142 @@ module testbitHolder ();
     .s_out(s_out)
   );
 
+  // inicio de la señal de reloj.
+  initial # 50 clk = 0;
 
-  initial #20 clk = 0;
-  always #3 clk = ~clk;
+  // El bitHolder tiene un retraso máximo de 2 not, 2 muxes y un flip flop.
+  // Para nuestro flip flop se tiene que el máximo retraso es tphlmax = 11.4ns
+  // En el caso del mux, tdismax = 5.5ns
+  // esto da (2*5.5+11.4)ns = 16.9ns => f = 59.17MHz para el bitHolder
+  // se utiliza un retraso de 17 => 58.82MHz
+  //
+  always # 37 clk = ~clk;
 
   initial begin
-    #50;
-    @(posedge clk);
-      s_der = 0;
-      s_izq = 0;
-      d_n = 0;
-      dir = 0;
-      modo = 2'b00;
 
-    #50;
-    @(posedge clk);
-      s_der = 1;
-      s_izq = 0;
-      d_n = 0;
-      dir = 0;
-      modo = 2'b00;
-      #50;
-      @(posedge clk);
+    // Prueba de carga en paralelo debido a que es
+    // escencial que este modo funcione bien por
+    // varias razones:
+    //   - Está bastante desligado al funcionamiento de los
+    //     otros modos, nótese que solo pasa por un mux antes
+    //     de entrar(o no entrar) al flipflop.
+    //   - Se utiliza para cargar los datos en las pruebas de los
+    //     otros modos.
 
-    #50;
+    // Primero se carga un 0.
+    # 50;
+    enb <= 1;
+    $display("se carga un 0");
     @(posedge clk);
+      modo <= 2'b1x;
+      s_der <= 1'bx;
+      s_izq <= 1'bx;
+      d_n <= 1'b0;
+      dir <= 1'bx;
 
-    #50;
+    // Ahora se carga un 1.
+    # 50;
+    $display("se carga un 1");
     @(posedge clk);
+      modo <= 2'b1x;
+      s_der <= 1'bx;
+      s_izq <= 1'bx;
+      d_n <= 1'b1;
+      dir <= 1'bx;
 
-    #50;
+    // Prueba de carga en serie
+    # 70
+    $display("---\nModo de Carga en Serie\n---");
+    $display("Hacia la izquierda");
+    $display("con s_der = 0");
     @(posedge clk);
+      modo <= 2'b00;
+      s_izq <= 1'bx;
+      dir <= 1'b0;
+      s_der <= 1'b0;
+      d_n <= 1'bx;
 
-    #50;
+    # 70
+    $display("con s_der = 1");
     @(posedge clk);
+      modo <= 2'b00;
+      s_izq <= 1'bx;
+      dir <= 1'b0;
+      s_der <= 1'b1;
+      d_n <= 1'bx;
 
-    #50;
+    $display("Hacia la derecha");
+    $display("con s_izq = 0");
     @(posedge clk);
+      modo <= 2'b00;
+      s_izq <= 1'b0;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
 
-    #50;
+    # 70
+    $display("con s_izq = 1");
     @(posedge clk);
-  end
+      modo <= 2'b00;
+      s_izq <= 1'b1;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
 
-  always @(posedge clk) begin
-    // if ($realtime > 100) begin
-    //   if (out_bit_cond != out_bit_estr) begin
-    //     $display ($time, "ERROR: esperado out_bit_cond: %b, encontrado out_bit_estr: %b", out_bit_cond, out_bit_estr);
-    //   end
-    //   if (carry_bit_cond != carry_bit_estr) begin
-    //     $display ($time, "ERROR: esperado carry_bit_cond: %b, encontrado carry_bit_estr: %b", carry_bit_cond, carry_bit_estr);
-    //   end
-    // end
+    // Prueba de modo en rotacion
+    # 70
+    $display("---\nModo de rotacion\n---");
+    $display("Hacia la izquierda");
+    $display("con s_der = 0");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'bx;
+      dir <= 1'b0;
+      s_der <= 1'b0;
+      d_n <= 1'bx;
+
+    # 70
+    $display("con s_der = 1");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'bx;
+      dir <= 1'b0;
+      s_der <= 1'b1;
+      d_n <= 1'bx;
+
+    $display("Hacia la derecha");
+    $display("con s_izq = 0");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'b0;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
+
+    # 70
+    $display("con s_izq = 1");
+    @(posedge clk);
+      modo <= 2'b01;
+      s_izq <= 1'b1;
+      dir <= 1'b1;
+      s_der <= 1'bx;
+      d_n <= 1'bx;
+
+
+    # 150;
+    @(posedge clk);
+    $finish;
   end
 
   initial
     begin
     $dumpfile("./tests/testbitHolder.vcd");
     $dumpvars;
-    $display ("\t     tiempo | s_der | s_izq | d_n | dir | modo[1]");
-    $monitor             ("%t| %b     | %b     | %b   | %b   | %b",
-                          $time, s_der, s_izq, d_n, dir, modo[1], clk);
-    #700;
-    $finish;
+    $display("------------------------------------");
+    $display("-- Test para modulo bitHolder     --");
+    $display("------------------------------------");
+    $display ("\t     tiempo | s_der | s_izq | d_n | dir | modo[1] | s_out | tiempo");
+    $monitor            ("%t| %b     | %b     | %b   | %b   | %b       | %b     | %f ns",
+                          $time, s_der, s_izq, d_n, dir, modo[1], s_out, $realtime);
   end
 endmodule
