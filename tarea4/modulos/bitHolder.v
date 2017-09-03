@@ -61,7 +61,7 @@ module bitHolder (
 
   parameter notoe = 1'b0;
 
-  wire d_in, d_in_not, d_in_ret; // siguiente bit a ingresar
+  wire d_in; // siguiente bit a ingresar
 
   wire nand1Y;
 
@@ -83,11 +83,8 @@ module bitHolder (
   notGate ng1(.a(clkenb), .y(clkenb_not));
   notGate ng2(.a(clkenb_not), .y(clkenb_ret));
 
-  notGate ng3(.a(d_in), .y(d_in_not));
-  notGate ng4(.a(d_in_not), .y(d_in_ret));
-
   ffD bitValue(
-    .d(d_in_ret),           // valor de entrada en flanco positivo cuando
+    .d(d_in),           // valor de entrada en flanco positivo cuando
                             // notclear y notpreset son 1.
     .clk(clkenb_ret),       // indica cuando cambia el estado en el flip flop
                             // esto es en los flancos positivos de (clk&enb)
