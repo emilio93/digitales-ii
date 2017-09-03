@@ -1,0 +1,4 @@
+build
+*.vcd
+*.pdf
+*.zip
