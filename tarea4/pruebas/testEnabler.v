@@ -1,3 +1,13 @@
+`ifndef enabler
+  `include "modulos/enabler.v"
+`endif
+`ifndef nandGate
+  `include "../tarea3/modulos/nandGate.v"
+`endif
+`ifndef notGate
+  `include "../tarea3/modulos/notGate.v"
+`endif
+
 `timescale 1ns/1ps
 
 /*

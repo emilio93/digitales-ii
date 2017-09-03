@@ -1,3 +1,13 @@
+`ifndef norGate
+  `include "../tarea3/modulos/norGate.v"
+`endif
+`ifndef mux
+  `include "../tarea3/modulos/mux.v"
+`endif
+`ifndef serialOcontiguo
+  `include "./modulos/serialOcontiguo.v"
+`endif
+
 `timescale 1ns/1ps
 
 /*
