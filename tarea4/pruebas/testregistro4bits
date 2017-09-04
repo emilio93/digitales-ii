@@ -33,11 +33,6 @@
   `include "../tarea3/modulos/ffD.v"
 `endif
 
-`ifndef rdesplazante
-  `include "./modulos/sreg.v"
-`endif
-
-
 `timescale 1ns/1ps
 
 /*
@@ -46,18 +41,7 @@ registro4bits.
  */
 module testregistro4bits ();
 
-//  reg clk;//termina con e es estructural
-  //reg enb;
-//  reg dir;
-//  reg s_ine;
-
-//  reg [1:0] modoe;
-//  reg [3:0] de;
-
-  wire [3:0] qe;
-  wire s_oute;
-
-  reg clk;//termina con c es conductual
+  reg clk;
   reg enb;
   reg dir;
   reg s_in;
@@ -65,47 +49,24 @@ module testregistro4bits ();
   reg [1:0] modo;
   reg [3:0] d;
 
-  wire [3:0] qc;
-  wire s_outc;
+  wire [3:0] q;
+  wire s_out;
 
-
-  registro4bits estructural(//estructural
-	.clk(clk),
-	.enb(enb),
-	.dir(dir),
-	.s_in(s_in),
-	.modo(modo),
-	.d(d),
-	.q(qe),
-	.s_out(s_oute)
-  );
-
-  rdesplazante conductual(//conductual
-	.CLK(clk),
-	.ENB(enb),
-	.DIR(dir),
-	.S_IN(s_in),
-	.MODE(modo),
-	.D(d),
-	.Q(qc),
-	.S_OUT(s_outc)
+  registro4bits registro1(
+    .clk(clk),
+    .enb(enb),
+    .dir(dir),
+    .s_in(s_in),
+    .modo(modo),
+    .d(d),
+    .q(q),
+    .s_out(s_out)
   );
 
   // inicio de la señal de reloj.
   initial # 50 clk = 0;
 
   always # 45 clk = ~clk;
-
-  always @(qe,qc ) begin
-	  if(qe != qc)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
-
-  end
-
-  always @(s_outc,s_oute ) begin
-	  if(s_outc != s_oute)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas s_out  >>>>>>>>>>>>>>>>>>>");
-
-  end
-
 
   initial begin
 
@@ -281,6 +242,6 @@ module testregistro4bits ();
     $display("------------------------------------");
     $display ("\t     tiempo | enb | dir | s_in | modo | d    | q    | s_out | tiempo");
     $monitor            ("%t| %b   | %b   | %b    | %b   | %b | %b | %b     | %f ns",
-                          $time, enb, dir, s_in, modo, d, qc, s_outc , $realtime);
+                          $time, enb, dir, s_in, modo, d, q, s_out , $realtime);
   end
 endmodule
