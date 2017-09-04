@@ -179,6 +179,11 @@ module testregistro4bits ();
     # 550;
     @(posedge clk);
     $finish;
+
+    $display("------------------------------------");
+    $display("##### FIN TEST DE REGISTRO    #####-");
+    $display("------------------------------------");
+ 
   end
 
   initial
