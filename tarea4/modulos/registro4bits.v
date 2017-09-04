@@ -22,7 +22,7 @@ module registro4bits (
 );
   parameter bits = 4;
   wire socMSBout, socLSBout;
-  wire clkenb;
+  wire clkenb,s_out;
 
 
 
@@ -33,21 +33,21 @@ module registro4bits (
     .out(socMSBout)
   );
 
-  serialOcontiguo socLSB(
+  serialOcontiguo socLSB(//modulo2
     .usual(q[3]),
     .s_in(s_in),
     .modo(modo),
     .out(socLSBout)
   );
 
-  enabler enabler1(
+  enabler enabler1(//modulo3
     .clk(clk),
     .enb(enb),
     .eclk(clkenb)
   );
 
   // El bitHolder 0 es el LSB
-  bitHolder bitHolder0(
+  bitHolder bitHolder0(//modulo4
     .s_der(socLSBout),
     .s_izq(q[1]),
     .d_n(d[0]),
@@ -57,7 +57,7 @@ module registro4bits (
     .s_out(q[0])
   );
 
-  bitHolder bitHolder1(
+  bitHolder bitHolder1(//modulo5
     .s_der(q[0]),
     .s_izq(q[2]),
     .d_n(d[1]),
@@ -67,7 +67,7 @@ module registro4bits (
     .s_out(q[1])
   );
 
-  bitHolder bitHolder2(
+  bitHolder bitHolder2(//modulo6
     .s_der(q[1]),
     .s_izq(q[3]),
     .d_n(d[2]),
@@ -77,7 +77,7 @@ module registro4bits (
     .s_out(q[2])
   );
 
-  bitHolder bitHolder3(
+  bitHolder bitHolder3(//modulo7
     .s_der(q[2]),
     .s_izq(socMSBout),
     .d_n(d[3]),
@@ -93,7 +93,7 @@ module registro4bits (
   notGate notModo0(.a(modo[0]), .y(not_modo[0]));
   notGate notModo1(.a(modo[1]), .y(not_modo[1]));
 
-  enabler modoCheck(.clk(not_modo[0]), .enb(not_modo[1]), .eclk(is_modo_00));
+  enabler modoCheck(.clk(not_modo[0]), .enb(not_modo[1]), .eclk(is_modo_00));//?
 
   parameter notpreset = 1'b1;
   parameter notclear = 1'b1;

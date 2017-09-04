@@ -121,10 +121,18 @@ end
     begin
     $dumpfile("./tests/testserialOcontiguo.vcd");
     $dumpvars();
+
+    $display("---------------------------------------");
+    $display("-- Test para modulo serialOcontiguo  --");
+    $display("---------------------------------------");
     $display ("\t     tiempo | usual | s_in | modo | out ");
     $monitor             ("%t| %b    | %b     | %b   | %b",
                           $time, usual, s_in, modo, out);
   #2650
+    $display("---------------------------------------");
+    $display("##### FIN TEST DE: SERIALOCONTIGUO ####");
+    $display("---------------------------------------");
+ 
     $finish;
   end
 endmodule

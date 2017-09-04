@@ -172,14 +172,16 @@ module testsalidaSerial ();
 
   initial begin
 
-    $dumpfile("./testsalidaSerial.vcd");
+    $dumpfile("../tests/testsalidaSerial.vcd");
     $dumpvars;
     $display("------------------------------------");
-    $display("-- Test -para modulo salidaSerial-");
+    $display("-- Test -para modulo salidaSerial --");
     $display("------------------------------------");
     $display ("\t     tiempo | s_der | s_izq | dir | dir | s_out | tiempo");
-    $monitor            ("%t| %b | %b | %b | %b  | %b  | %b | %b",
-                          $time, s_der, s_izq, dir, dir, s_out, $realtime);
+    $monitor ("%t| %b | %b | %b | %b  | %f ns",
+              $time, s_der, s_izq, dir, s_out, $realtime);
 	//	  #500
-  end
+  
+
+	end
 endmodule
