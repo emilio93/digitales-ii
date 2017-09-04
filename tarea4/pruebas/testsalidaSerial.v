@@ -1,3 +1,20 @@
+`ifndef norGate
+ `include "../tarea3/modulos/norGate.v"
+`endif
+
+`ifndef serialOcontiguo
+ `include "./modulos/serialOcontiguo.v"
+`endif
+
+`ifndef mux
+	`include "../tarea3/modulos/mux.v"
+`endif
+
+`ifndef salidaSerial
+	`include "./modulos/salidaSerial.v"
+`endif
+
+
 `timescale 1ns/1ps
 
 module testsalidaSerial ();
@@ -150,20 +167,25 @@ module testsalidaSerial ();
   s_izq = 0;
   dir = 0;
  
-
+    $display("-------------------------------------");
+    $display("##### FIN TEST DE: SALIDASERIAL #####");
+    $display("-------------------------------------");
+ 
   $finish;
   end
 
   initial begin
 
-    $dumpfile("./testsalidaSerial.vcd");
+    $dumpfile("../tests/testsalidaSerial.vcd");
     $dumpvars;
     $display("------------------------------------");
-    $display("-- Test -para modulo salidaSerial-");
+    $display("-- Test -para modulo salidaSerial --");
     $display("------------------------------------");
     $display ("\t     tiempo | s_der | s_izq | dir | dir | s_out | tiempo");
-    $monitor            ("%t| %b | %b | %b | %b  | %b  | %b | %b",
-                          $time, s_der, s_izq, dir, dir, s_out, $realtime);
+    $monitor ("%t| %b | %b | %b | %b  | %f ns",
+              $time, s_der, s_izq, dir, s_out, $realtime);
 	//	  #500
-  end
+  
+
+	end
 endmodule

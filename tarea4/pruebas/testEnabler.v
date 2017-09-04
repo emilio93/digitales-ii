@@ -56,10 +56,17 @@ end
     begin
     $dumpfile("./tests/testEnabler.vcd");
     $dumpvars();
+    $display("------------------------------------");
+    $display("--  Test para modulo Enabler      --");
+    $display("------------------------------------");
     $display ("\t     tiempo | clk | enb | out ");
     $monitor             ("%t| %b    | %b     | %b ",
                           $time, clk, enb,  out);
   #450
+    $display("------------------------------------");
+    $display("####### FIN TEST DE: ENABLER  ######");
+    $display("------------------------------------");
+
     $finish;
   end
 endmodule
