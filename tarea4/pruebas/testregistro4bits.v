@@ -148,7 +148,8 @@ module testregistro4bits ();
       d <= 4'b1111;
       dir <= 1'bx;
 
-    // Prueba de carga en serie
+    // Prueba de carga en serie modo (00) 
+    // direccion 0:izquiera ,  1:derecha
     # 200
     $display("---\nModo de Carga en Serie\n---");
     $display("Hacia la izquierda");
@@ -178,6 +179,26 @@ module testregistro4bits ();
 
     # 550;
     @(posedge clk);
+
+    // Prueba de rotación circular modo (01) 
+    // direccion 0:izquiera ,  1:derecha
+    # 200
+    $display("---\nModo de rotacion circular\n---");
+    $display("Hacia la izquierda");
+    @(posedge clk);
+      d <= 4'bzzzz;
+      modo <= 2'b01;
+      dir <= 1'b0;
+
+    # 400
+    $display("Hacia la derecha");
+    @(posedge clk);
+      dir <= 1'b1;
+
+    # 550;
+    @(posedge clk);
+ 
+
     $finish;
 
     $display("------------------------------------");
