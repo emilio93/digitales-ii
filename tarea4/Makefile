@@ -22,4 +22,4 @@ run:
 
 clean:
 	@rm -R build
-	@rm -R tests
+	@rm -R tests/*.vcd
