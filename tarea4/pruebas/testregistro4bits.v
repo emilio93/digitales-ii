@@ -242,7 +242,7 @@ module testregistro4bits ();
     # 60;
     $display("se carga 0111");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0111;
       dir <= 1'bx;
 
