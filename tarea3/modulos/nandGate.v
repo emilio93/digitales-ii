@@ -51,6 +51,6 @@ module nandGate (
 
   always @ (y) begin
     c=c+1;
-    $display("     Potencia disipada por la compuerta NAND: %f", c * Cl * Vcc);
+    // $display("     Potencia disipada por la compuerta NAND: %f", c * Cl * Vcc);
   end
 endmodule

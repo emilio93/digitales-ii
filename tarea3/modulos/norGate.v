@@ -51,6 +51,6 @@ module norGate (
 
   always @ (y) begin
     c=c+1;
-    $display("     Potencia disipada por la compuerta NOR: %f", c * Cl * Vcc);
+    // $display("     Potencia disipada por la compuerta NOR: %f", c * Cl * Vcc);
   end
 endmodule
