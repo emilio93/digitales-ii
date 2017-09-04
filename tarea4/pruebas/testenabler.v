@@ -13,7 +13,7 @@
 /*
 El módulo Enabler  encarga de crear un habilitador para todo el registro mediante el clock
  */
-module testEnabler();
+module testenabler();
    reg clk;
    reg enb;
    wire out;
