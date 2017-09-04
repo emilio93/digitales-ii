@@ -1,0 +1,58 @@
+[*]
+[*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
+[*] Mon Sep  4 06:03:22 2017
+[*]
+[dumpfile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testregistro4bits.vcd"
+[dumpfile_mtime] "Mon Sep  4 05:47:35 2017"
+[dumpfile_size] 46263
+[savefile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testregistro4bits.gtkw"
+[timestart] 0
+[size] 1878 1025
+[pos] -116 -116
+*-19.929792 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testregistro4bits.
+[sst_width] 223
+[signals_width] 147
+[sst_expanded] 1
+[sst_vpaned_height] 291
+@28
+testregistro4bits.enb
+testregistro4bits.clk
+testregistro4bits.dir
+testregistro4bits.modo[1:0]
+testregistro4bits.estructural.s_in
+@800022
+[color] 2
+testregistro4bits.qc[3:0]
+@28
+[color] 2
+(0)testregistro4bits.qc[3:0]
+[color] 2
+(1)testregistro4bits.qc[3:0]
+[color] 2
+(2)testregistro4bits.qc[3:0]
+[color] 2
+(3)testregistro4bits.qc[3:0]
+[color] 2
+testregistro4bits.estructural.s_out
+@1001200
+-group_end
+@800022
+[color] 3
+testregistro4bits.qe[3:0]
+@28
+[color] 3
+(0)testregistro4bits.qe[3:0]
+[color] 3
+(1)testregistro4bits.qe[3:0]
+[color] 3
+(2)testregistro4bits.qe[3:0]
+[color] 3
+(3)testregistro4bits.qe[3:0]
+@1001200
+-group_end
+@28
+[color] 3
+testregistro4bits.estructural.s_out_ff
+[pattern_trace] 1
+[pattern_trace] 0

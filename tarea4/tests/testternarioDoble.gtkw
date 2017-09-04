@@ -1,0 +1,33 @@
+[*]
+[*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
+[*] Mon Sep  4 06:11:16 2017
+[*]
+[dumpfile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testternarioDoble.vcd"
+[dumpfile_mtime] "Mon Sep  4 05:47:35 2017"
+[dumpfile_size] 3073
+[savefile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testternarioDoble.gtkw"
+[timestart] 0
+[size] 1878 1025
+[pos] -116 -116
+*-19.166035 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 223
+[signals_width] 78
+[sst_expanded] 1
+[sst_vpaned_height] 291
+@28
+testternarioDoble.clk
+[color] 3
+testternarioDoble.a
+[color] 3
+testternarioDoble.b
+[color] 3
+testternarioDoble.c
+[color] 5
+testternarioDoble.s1
+@29
+[color] 5
+testternarioDoble.s2
+[color] 4
+testternarioDoble.y
+[pattern_trace] 1
+[pattern_trace] 0

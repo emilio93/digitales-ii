@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
+[*] Mon Sep  4 06:06:39 2017
+[*]
+[dumpfile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testsalidaSerial.vcd"
+[dumpfile_mtime] "Mon Sep  4 05:47:35 2017"
+[dumpfile_size] 3410
+[savefile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/sestsalidaSerial.gtkw"
+[timestart] 0
+[size] 1878 1025
+[pos] -116 -116
+*-16.089312 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 223
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 291
+@28
+testsalidaSerial.s_der
+testsalidaSerial.s_izq
+testsalidaSerial.dir
+testsalidaSerial.modo[1:0]
+@29
+testsalidaSerial.s_out
+[pattern_trace] 1
+[pattern_trace] 0
