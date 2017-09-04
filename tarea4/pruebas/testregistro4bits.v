@@ -65,8 +65,12 @@ module testregistro4bits ();
 
   always # 45 clk = ~clk;
 
+
   initial begin
 
+    # 50;
+    @(posedge clk);
+    modo <= 2'b00;
     // Prueba de carga en paralelo debido a que es
     // escencial que este modo funcione bien por
     // varias razones:
@@ -76,39 +80,39 @@ module testregistro4bits ();
     //   - Se utiliza para cargar los datos en las pruebas de los
     //     otros modos.
 
-    # 50;
+    # 10;
     $display("se carga 0000");
     @(posedge clk);
       enb <= 1;
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0000;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 0001");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0001;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 0010");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0010;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 0100");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0100;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 1000");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b1000;
       dir <= 1'bx;
 
@@ -116,35 +120,35 @@ module testregistro4bits ();
     $display("se carga 0000");
     @(posedge clk);
       enb <= 1;
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0000;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 0001");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0001;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 0011");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0011;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 0111");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0111;
       dir <= 1'bx;
 
     # 50;
     $display("se carga 1111");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b1111;
       dir <= 1'bx;
 
