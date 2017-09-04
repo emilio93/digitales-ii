@@ -24,9 +24,7 @@ module registro4bits (
   wire socMSBout, socLSBout;
   wire clkenb,s_out;
 
-
-
-  serialOcontiguo socMSB(
+  serialOcontiguo socMSB(//modulo1
     .usual(q[0]),
     .s_in(s_in),
     .modo(modo),
@@ -89,37 +87,37 @@ module registro4bits (
 
   wire [1:0] not_modo;
   wire is_modo_00;
-
-  notGate notModo0(.a(modo[0]), .y(not_modo[0]));
-  notGate notModo1(.a(modo[1]), .y(not_modo[1]));
+  
+  notGate notModo0(.a(modo[0]), .y(not_modo[0]));//?
+  notGate notModo1(.a(modo[1]), .y(not_modo[1]));//?
 
   enabler modoCheck(.clk(not_modo[0]), .enb(not_modo[1]), .eclk(is_modo_00));//?
 
-  parameter notpreset = 1'b1;
-  parameter notclear = 1'b1;
-  wire notq;
-  wire s_out_tran;
-  wire s_out_ff;
-  ffD s_out_reg(
-    .d(s_out_tran),               // valor de entrada en flanco positivo cuando
-                            // notclear y notpreset son 1.
-    .clk(clkenb),       // indica cuando cambia el estado en el flip flop
-                            // esto es en los flancos positivos de (clk&enb)
-    .notpreset(notpreset),  // si es 1 y notclear es 0, se carga 1 en el flip flop(asincrónico).
-    .notclear(notclear),    // si es 1 y notpreset es 0, se carga 0 en el flip flop(asincrónico).
-    .q(s_out_ff),              // es el valor actual en el flip flop.
-    .notq(notq)             // el valor negado de q
+  salidaSerial salida(//modulo8 son 8 en total: 1 enabler, 4 bitHolders, 2 serialOcontiguo, 1 salidaSerial.
+    .modo(modo),
+    .s_der(q[0]),
+    .s_izq(q[3]),
+    .dir(dir),
+    .s_out(s_out)
   );
 
 
-  ternarioDoble salida(
-    .a(s_out_ff),
-    .b(1'b0),
-    .c(1'b0),
-    .s1(dir),
-    .s2(not_modo[0]),
-    .y(s_out)
-  );
 
+parameter notpreset = 1'b1;
+parameter notclear = 1'b1;
+wire notq;
+//wire s_out_tran;
+wire s_out_ff;
+ffD s_out_reg(
+	.d(s_out), // valor de entrada en flanco positivo cuando
+	// notclear y notpreset son 1.
+	 .clk(clkenb), // indica cuando cambia el estado en el flip flop
+	 // esto es en los flancos positivos de (clk&enb)
+	 .notpreset(notpreset), // si es 1 y notclear es 0, se carga 1 en el  flip flop(asincrónico).
+	 .notclear(notclear), // si es 1 y notpreset es 0, se carga 0 en el flip flop(asincrónico).
+	 .q(s_out_ff), // es el valor actual en el flip flop.
+	 .notq(notq) // el valor negado de q
+	 );
+		//
 
 endmodule // registro4bits

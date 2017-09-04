@@ -172,7 +172,7 @@ module testsalidaSerial ();
 
   initial begin
 
-    $dumpfile("../tests/testsalidaSerial.vcd");
+    $dumpfile("./tests/testsalidaSerial.vcd");
     $dumpvars;
     $display("------------------------------------");
     $display("-- Test -para modulo salidaSerial --");
