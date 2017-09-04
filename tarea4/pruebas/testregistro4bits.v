@@ -94,7 +94,7 @@ module testregistro4bits ();
   // inicio de la señal de reloj.
   initial # 50 clk = 0;
 
-  always # 45 clk = ~clk;
+  always # 17.4 clk = ~clk;
 
   always @(qe,qc ) begin
 	  if(qe != qc)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
@@ -192,7 +192,7 @@ module testregistro4bits ();
       d <= 4'b1111;
       dir <= 1'bx;
 
-    // Prueba de carga en serie modo (00) 
+    // Prueba de carga en serie modo (00)
     // direccion 0:izquiera ,  1:derecha
     # 200
     $display("---\nModo de Carga en Serie\n---");
@@ -249,7 +249,7 @@ module testregistro4bits ();
       dir <= 1'bx;
 
 
-    // Prueba de rotación circular modo (01) 
+    // Prueba de rotación circular modo (01)
     // direccion 0:izquiera ,  1:derecha
     # 200
     $display("---\nModo de rotacion circular\n---");
@@ -266,11 +266,11 @@ module testregistro4bits ();
 
     # 550;
     @(posedge clk);
- 
+
     $display("------------------------------------");
     $display("##### FIN TEST DE REGISTRO    #####-");
     $display("------------------------------------");
- 
+
     $finish;
   end
 
