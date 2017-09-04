@@ -1,19 +1,18 @@
-`ifndef norGate
- `include "../tarea3/modulos/norGate.v"
+`ifndef ternarioDoble
+  `include "modulos/ternarioDoble.v"
 `endif
-
-`ifndef serialOcontiguo
- `include "./modulos/serialOcontiguo.v"
-`endif
-
 `ifndef mux
-	`include "../tarea3/modulos/mux.v"
+  `include "../tarea3/modulos/mux.v"
 `endif
-
+`ifndef norGate
+  `include "../tarea3/modulos/norGate.v"
+`endif
 `ifndef salidaSerial
-	`include "./modulos/salidaSerial.v"
+  `include "modulos/salidaSerial.v"
 `endif
-
+`ifndef serialOcontiguo
+  `include "modulos/serialOcontiguo.v"
+`endif
 
 `timescale 1ns/1ps
 
@@ -46,43 +45,43 @@ module testsalidaSerial ();
   s_der = 0;
   s_izq = 0;
   dir = 0;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 0;
   dir = 0;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 0;
   dir = 0;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 1;
   dir = 1;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 0;
   s_izq = 1;
   dir = 1;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 0;
   s_izq = 0;
   dir = 1;
- 
+
   #retardos
   modo = 2'b10;
   s_der = 0;
   s_izq = 0;
   dir = 1;
-   
+
   #retardos
   modo = 2'b10;
   s_der = 0;
@@ -100,19 +99,19 @@ module testsalidaSerial ();
   s_der = 1;
   s_izq = 1;
   dir = 1;
- 
+
   #retardos
   modo = 2'b01;
   s_der = 0;
   s_izq = 1;
   dir = 1;
- 
+
   #retardos
   modo = 2'b10;
   s_der = 0;
   s_izq = 1;
   dir = 0;
- 
+
   #retardos
   modo = 2'b10;
   s_der = 1;
@@ -124,53 +123,50 @@ module testsalidaSerial ();
   s_der = 1;
   s_izq = 0;
   dir = 0;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 0;
   dir = 1;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 0;
   s_izq = 1;
   dir = 1;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 0;
   dir = 0;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 1;
   dir = 0;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 0;
   dir = 1;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 0;
   s_izq = 1;
   dir = 1;
- 
+
   #retardos
   modo = 2'b00;
   s_der = 1;
   s_izq = 0;
   dir = 0;
- 
-    $display("-------------------------------------");
-    $display("##### FIN TEST DE: SALIDASERIAL #####");
-    $display("-------------------------------------");
- 
+
+
   $finish;
   end
 
