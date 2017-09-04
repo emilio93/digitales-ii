@@ -96,7 +96,6 @@ module testregistro4bits ();
 
   always # 45 clk = ~clk;
 
-<<<<<<< HEAD
   always @(qe,qc ) begin
 	  if(qe != qc)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
 
@@ -106,9 +105,6 @@ module testregistro4bits ();
 	  if(s_outc != s_oute)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas s_out  >>>>>>>>>>>>>>>>>>>");
 
   end
-
-=======
->>>>>>> b90892335d0d8b59722021285ad2f47c6f9e805c
 
   initial begin
 
@@ -248,7 +244,7 @@ module testregistro4bits ();
     # 60;
     $display("se carga 0111");
     @(posedge clk);
-      modo <= 2'b1x;
+      modo <= 2'b10;
       d <= 4'b0111;
       dir <= 1'bx;
 
