@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
-[*] Mon Sep  4 06:03:22 2017
+[*] Mon Sep  4 06:22:55 2017
 [*]
 [dumpfile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testregistro4bits.vcd"
-[dumpfile_mtime] "Mon Sep  4 05:47:35 2017"
+[dumpfile_mtime] "Mon Sep  4 06:13:19 2017"
 [dumpfile_size] 46263
 [savefile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testregistro4bits.gtkw"
 [timestart] 0
 [size] 1878 1025
-[pos] -116 -116
-*-19.929792 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-19.370113 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testregistro4bits.
 [sst_width] 223
 [signals_width] 147

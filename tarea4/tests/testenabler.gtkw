@@ -1,23 +1,25 @@
 [*]
 [*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
-[*] Mon Sep  4 05:52:27 2017
+[*] Mon Sep  4 06:21:57 2017
 [*]
 [dumpfile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testEnabler.vcd"
-[dumpfile_mtime] "Mon Sep  4 05:47:35 2017"
+[dumpfile_mtime] "Mon Sep  4 06:13:19 2017"
 [dumpfile_size] 1198
 [savefile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea4/tests/testenabler.gtkw"
 [timestart] 0
 [size] 1878 1025
-[pos] -116 -116
-*-16.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-15.844109 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 223
 [signals_width] 78
 [sst_expanded] 1
 [sst_vpaned_height] 291
 @28
 testEnabler.clk
-testEnabler.enb
 @29
+testEnabler.enb
+@28
+[color] 4
 testEnabler.out
 [pattern_trace] 1
 [pattern_trace] 0
