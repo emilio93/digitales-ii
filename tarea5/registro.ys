@@ -1,0 +1,17 @@
+read_verilog ../tarea2/modulos/registro.v
+hierarchy -check -top registro
+show -prefix original
+proc; show -prefix proc
+opt; show -prefix proc_opt
+fsm; show -prefix fsm
+opt; show -prefix fsm_opt
+memory; show -prefix memory
+opt; show -prefix memory_opt
+techmap; show -prefix techmap
+opt; show -prefix techmap_opt
+write_verilog rtlil.v
+dfflibmap -liberty ../lib/cmos_cells.lib; show -prefix dff_seq -lib ../lib/cmos_cells.v
+abc -liberty ../lib/cmos_cells.lib; show -prefix abc_comb -lib ../lib/cmos_cells.v
+clean
+show -prefix synth -lib ../lib/cmos_cells.v
+write_verilog sintetizado.v
