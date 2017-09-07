@@ -1,3 +1,5 @@
 *.pid
 *.dot
+pdfs
+build
 release
