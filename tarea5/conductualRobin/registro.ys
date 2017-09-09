@@ -1,0 +1,27 @@
+read_verilog sreg.v
+hierarchy -check -top rdesplazante
+show -prefix original -colors 3 -viewer echo
+proc
+show -prefix proc -colors 3 -viewer echo
+opt
+show -prefix proc_opt -colors 3 -viewer echo
+fsm
+show -prefix fsm -colors 3 -viewer echo
+opt
+show -prefix fsm_opt -colors 3 -viewer echo
+memory
+show -prefix memory -colors 3 -viewer echo
+opt
+show -prefix memory_opt -colors 3 -viewer echo
+techmap
+show -prefix techmap -colors 3 -viewer echo
+opt
+show -prefix techmap_opt -colors 3 -viewer echo
+write_verilog build/rtlil.v
+dfflibmap -liberty lib/cmos_cells.lib;
+show -prefix dff_seq -lib lib/cmos_cells.v -colors 3 -viewer echo
+abc -liberty lib/cmos_cells.lib;
+show -prefix abc_comb -lib lib/cmos_cells.v -colors 3 -viewer echo
+clean
+show -prefix synth -lib lib/cmos_cells.v -viewer echo -colors 3 -viewer echo
+write_verilog build/sintetizado.v
