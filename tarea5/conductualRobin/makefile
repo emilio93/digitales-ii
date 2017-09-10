@@ -4,7 +4,7 @@ EXE=build/exe
 
 
 all:
-	iverilog src/test.v  -o ${EXE}
+	iverilog src/test.v lib/cmos_cells.v  -o ${EXE}
 s:	
 	mkdir -p build
 	yosys src/syn4bitreg.ys
