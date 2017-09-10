@@ -1,0 +1,41 @@
+Tarea 5
+Emilio y Robin
+
+Instrucciones de ejecución:
+
+make s		#realiza la sintetsis de yosys con el archivo en src/yosyssrc
+make 		#compila el archivo de prueba
+make run	#ejecuta el archivo de prueba
+make gtk 	#abre gtkwave para ver resultados
+make clean 	#borra todos archivos creados
+
+Organización en directorios:
+.
+├── build	#resultados de ejecucion, es borrado con make clean
+│   ├── abc_comb.dot
+│   ├── dff_seq.dot
+│   ├── exe
+│   ├── fsm.dot
+│   ├── fsm_opt.dot
+│   ├── memory.dot
+│   ├── memory_opt.dot
+│   ├── original.dot
+│   ├── proc.dot
+│   ├── proc_opt.dot
+│   ├── rtlil.v
+│   ├── synth.dot
+│   ├── techmap.dot
+│   ├── techmap_opt.dot
+│   ├── testT5.vcd
+│   └── yosys_sreg_sintetizado.v
+├── lib		#bibliotecas para yosys	 
+│   ├── cmos_cells.lib
+│   └── cmos_cells.v
+├── makefile
+└── src		#codigo fuente para la sintesis y para las pruebas
+    ├── sreg1.v
+    ├── syn4bitreg.ys
+    ├── test.v
+    └── yosyssrc
+        └── sreg.v
+
