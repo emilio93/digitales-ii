@@ -1,0 +1,17 @@
+read_verilog src/yosyssrc/sreg.v
+hierarchy -check -top rdesplazante
+show -prefix build/original -viewer echo
+proc; show -prefix build/proc -viewer echo
+opt; show -prefix build/proc_opt -viewer echo 
+fsm; show -prefix build/fsm -viewer echo
+opt; show -prefix build/fsm_opt -viewer echo
+memory; show -prefix build/memory -viewer echo
+opt; show -prefix build/memory_opt -viewer echo
+techmap; show -prefix build/techmap -viewer echo
+opt; show -prefix build/techmap_opt -viewer echo
+write_verilog build/rtlil.v
+dfflibmap -liberty lib/cmos_cells.lib; show -prefix build/dff_seq -lib lib/cmos_cells.v -viewer echo
+abc -liberty lib/cmos_cells.lib; show -prefix build/abc_comb -lib lib/cmos_cells.v -viewer echo
+clean
+show -prefix build/synth -lib lib/cmos_cells.v -viewer echo
+write_verilog build/yosys_sreg_sintetizado.v

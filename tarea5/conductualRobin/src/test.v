@@ -1,8 +1,8 @@
 `ifndef rdesplazante
-  `include "build/sintetizado.v"
+  `include "build/yosys_sreg_sintetizado.v"
 `endif
 `ifndef rdesplazante1
-  `include "sreg.v"
+  `include "src/sreg1.v"
 `endif
 
 `timescale 1ns/1ps
@@ -36,7 +36,7 @@ module testregistro4bits ();
   wire s_outc;
 
 
-rdesplazante estructural(//estructural
+rdesplazante estructural(//estructural yosys
   .CLK(clk),
   .ENB(enb),
   .DIR(dir),

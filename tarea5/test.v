@@ -243,7 +243,7 @@ rdesplazante conductual(//conductual
 
   initial
     begin
-    $dumpfile("./tests/testregistro4bits.vcd");
+    $dumpfile("testT5.vcd");
     $dumpvars;
     $display("------------------------------------");
     $display("-- Test para modulo registro4bits --");
