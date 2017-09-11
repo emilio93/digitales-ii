@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
+[*] Mon Sep 11 04:23:10 2017
+[*]
+[dumpfile] "./build/conductual_sintesis_biblioteca1.vcd"
+[dumpfile_mtime] "Mon Sep 11 04:18:39 2017"
+[dumpfile_size] 30951
+[savefile] "./conductual_sintesis_biblioteca1.gtkw"
+[timestart] 0
+[size] 1878 1025
+[pos] -1 -1
+*-19.081257 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 223
+[signals_width] 86
+[sst_expanded] 1
+[sst_vpaned_height] 291
+@800022
+testregistro4bits.qc[3:0]
+@28
+(0)testregistro4bits.qc[3:0]
+(1)testregistro4bits.qc[3:0]
+(2)testregistro4bits.qc[3:0]
+(3)testregistro4bits.qc[3:0]
+@1001200
+-group_end
+@28
+testregistro4bits.s_outc
+@800023
+testregistro4bits.qe[3:0]
+@29
+(0)testregistro4bits.qe[3:0]
+(1)testregistro4bits.qe[3:0]
+(2)testregistro4bits.qe[3:0]
+(3)testregistro4bits.qe[3:0]
+@1001201
+-group_end
+@28
+testregistro4bits.s_oute
+[pattern_trace] 1
+[pattern_trace] 0

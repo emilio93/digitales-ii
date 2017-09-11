@@ -1,25 +1,14 @@
-`ifndef registro
-  `include "build/rtlil.v"
-`endif
 `ifndef rdesplazante
-  `include "../tarea4/modulos/sreg.v"
+  `include "./build/sintetizado.v"
 `endif
+`ifndef rdesplazanteconduct
+  `include "./modulos/sreg.v"
+`endif
+`include "./lib/cmos_cells.v"
 
 `timescale 1ns/1ps
 
-/*
-El módulo testregistro4bits se encarga de probar el módulo
-registro4bits.
- */
 module testregistro4bits ();
-
-//  reg clk;//termina con e es estructural
-//reg enb;
-//  reg dir;
-//  reg s_ine;
-
-//  reg [1:0] modoe;
-//  reg [3:0] de;
 
   wire [3:0] qe;
   wire s_oute;
@@ -35,19 +24,26 @@ module testregistro4bits ();
   wire [3:0] qc;
   wire s_outc;
 
+  real cambioqc;//variables reales para comparar tiempos
+  real cambioqe;
+  real cambiosoc;
+  real cambiosoe;
+  real tp = 43;//tolerancia de tiempo entre cambios
+  integer contador = 0;//contador de cantidad de diferencias
 
-registro estructural(//estructural
-  .clk(clk),
-  .enb(enb),
-  .dir(dir),
-  .s_in(s_in),
-  .modo(modo),
-  .d(d),
-  .q(qe),
-  .s_out(s_oute)
+
+rdesplazante estructural(//estructural
+  .CLK(clk),
+  .ENB(enb),
+  .DIR(dir),
+  .S_IN(s_in),
+  .MODE(modo),
+  .D(d),
+  .Q(qe),
+  .S_OUT(s_oute)
 );
 
-rdesplazante conductual(//conductual
+rdesplazanteconduct conductual(//conductual
   .CLK(clk),
   .ENB(enb),
   .DIR(dir),
@@ -63,14 +59,17 @@ rdesplazante conductual(//conductual
 
   always # 17.4 clk = ~clk;
 
-  always @(qe,qc ) begin
-    if(qe != qc)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
+  always @(qe) cambioqe = $time;
+  always @(qc) cambioqc = $time;
+  always @(s_outc) cambiosoc = $time;
+  always @(s_oute) cambiosoe = $time;
 
+  always @(qe, qc) begin
+    if (qe != qc) $display("<<<<<<<<<<<<<<<<Hay diferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
   end
 
-  always @(s_outc,s_oute ) begin
-    if(s_outc != s_oute)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas s_out  >>>>>>>>>>>>>>>>>>>");
-
+  always @(s_outc, s_oute) begin
+    if (s_outc != s_oute) $display("<<<<<<<<<<<<<<<<Hay diferencias entre las salidas s_out  >>>>>>>>>>>>>>>>>>>");
   end
 
   initial begin
@@ -234,19 +233,19 @@ rdesplazante conductual(//conductual
     # 550;
     @(posedge clk);
 
-    $display("------------------------------------");
-    $display("##### FIN TEST DE REGISTRO    #####-");
-    $display("------------------------------------");
-
+    $display("------------------------------------------------------------------------------------------");
+    $display("## FIN COMPARACION DE SINTESIS SIN TIEMPOS DE RETRASO DE YOSYS Y DESCRIPCION CONDUCTUAL ##");
+    $display("------------------------------------------------------------------------------------------");
+    $display("Cantidad de diferencias totales: %d", contador);
     $finish;
   end
 
   initial
     begin
-    $dumpfile("testT5.vcd");
+    $dumpfile("tests/rdesplazante.vcd");
     $dumpvars;
     $display("------------------------------------");
-    $display("-- Test para modulo registro4bits --");
+    $display("-- Test para modulo rdesplazante  --");
     $display("------------------------------------");
     $display ("\t     tiempo | enb | dir | s_in | modo | d    | q    | s_out | tiempo");
     $monitor            ("%t| %b   | %b   | %b    | %b   | %b | %b | %b     | %f ns",

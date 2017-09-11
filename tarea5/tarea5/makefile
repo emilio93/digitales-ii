@@ -1,6 +1,6 @@
-GTK1=build/*1.vcd
-GTK2=build/*2.vcd
-GTK3=build/*3.vcd
+GTK1=./*1.gtkw
+GTK2=./*2.gtkw
+GTK3=./*3.gtkw
 EXE1=build/estructuralCmoslib
 EXE2=build/estructuralGenerico
 EXE3=build/2estructurales
@@ -10,31 +10,38 @@ SRC3=src/tests/et4vss.v
 SRCT4=src/modulosT4/*.v
 SRCT3=src/modulosT3/*.v
 
+DELAY_MODE=-Ttyp
+CC1=vvp
+VPI=-M ~/.local/install/ivl/lib/ivl
+
 all:
-	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1}
-	iverilog ${SRC2}  -o ${EXE2}
-	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3}
+	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1} ${DELAY_MODE}
+	iverilog ${SRC2}  -o ${EXE2} ${DELAY_MODE}
+	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3} ${DELAY_MODE}
 
 1:
-	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1}
+	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1} ${DELAY_MODE}
 
 2:
-	iverilog ${SRC2}  -o ${EXE2}
+	iverilog ${SRC2}  -o ${EXE2} ${DELAY_MODE}
 
 3:
-	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3}	
+	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3} ${DELAY_MODE}
 
 s:	
 	mkdir -p build
 	yosys src/yosyssrc/syn4bitreg.ys
 	rm -f *.pid
 	
+
+run:
+	$(foreach test,$(wildcard build/*estructural*), $(CC1) $(VPI) $(test);)
 run1:
-	vvp ${EXE1}
+	vvp ${VPI} ${EXE1}
 run2:
-	vvp ${EXE2}
+	vvp ${VPI} ${EXE2}
 run3:
-	vvp ${EXE3}
+	vvp ${VPI} ${EXE3}
 
 gtk1:
 	gtkwave ${GTK1} &

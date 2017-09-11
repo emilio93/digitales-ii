@@ -1,0 +1,39 @@
+[*]
+[*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
+[*] Mon Sep 11 04:32:34 2017
+[*]
+[dumpfile] "./tests/rdesplazante.vcd"
+[dumpfile_mtime] "Mon Sep 11 04:31:04 2017"
+[dumpfile_size] 24056
+[savefile] "./tests/rdesplazante.gtkw"
+[timestart] 0
+[size] 1878 1025
+[pos] -30 -30
+*-19.083649 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 223
+[signals_width] 86
+[sst_expanded] 1
+[sst_vpaned_height] 291
+@800022
+testregistro4bits.qc[3:0]
+@28
+(0)testregistro4bits.qc[3:0]
+(1)testregistro4bits.qc[3:0]
+(2)testregistro4bits.qc[3:0]
+(3)testregistro4bits.qc[3:0]
+testregistro4bits.s_outc
+@1001200
+-group_end
+@800022
+testregistro4bits.qe[3:0]
+@28
+(0)testregistro4bits.qe[3:0]
+(1)testregistro4bits.qe[3:0]
+(2)testregistro4bits.qe[3:0]
+(3)testregistro4bits.qe[3:0]
+@29
+testregistro4bits.s_oute
+@1001200
+-group_end
+[pattern_trace] 1
+[pattern_trace] 0
