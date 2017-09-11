@@ -7,7 +7,7 @@
 module enabler(
   input clk,
   input enb,
-  output eclk
+  output eclk // La salida indica flancos de reloj en que se actua
 );
 
   wire clk,enb,eclk;
