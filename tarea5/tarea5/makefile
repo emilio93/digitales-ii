@@ -11,6 +11,9 @@ SRCT4=src/modulosT4/*.v
 SRCT3=src/modulosT3/*.v
 
 DELAY_MODE=-Ttyp
+CC1=vvp
+VPI=-M ~/.local/install/ivl/lib/ivl
+
 all:
 	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1} ${DELAY_MODE}
 	iverilog ${SRC2}  -o ${EXE2} ${DELAY_MODE}
@@ -30,12 +33,15 @@ s:
 	yosys src/syn4bitreg.ys
 	rm -f *.pid
 	
+
+run:
+	$(foreach test,$(wildcard build/*estructural*), $(CC1) $(VPI) $(test);)
 run1:
-	vvp ${EXE1}
+	vvp ${VPI} ${EXE1}
 run2:
-	vvp ${EXE2}
+	vvp ${VPI} ${EXE2}
 run3:
-	vvp ${EXE3}
+	vvp ${VPI} ${EXE3}
 
 gtk1:
 	gtkwave ${GTK1} &
