@@ -5,6 +5,7 @@ Instrucciones de ejecución:
 
 make s		#realiza la sintesis de yosys con el archivo en src/yosyssrc ejecutar antes de cualquier otro comando
 make 		#compila los archivos de pruebas
+make run	#ejecuta los archivos de prueba
 make run1	#ejecuta el archivo de prueba respectivo
 make run2
 make run3
