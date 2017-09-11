@@ -3,7 +3,7 @@ Emilio y Robin
 
 Instrucciones de ejecución:
 
-make s		#realiza la sintetsis de yosys con el archivo en src/yosyssrc
+make s		#realiza la sintesis de yosys con el archivo en src/yosyssrc
 make 		#compila el archivo de prueba
 make run	#ejecuta el archivo de prueba
 make gtk 	#abre gtkwave para ver resultados

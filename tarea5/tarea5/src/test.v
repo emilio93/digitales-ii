@@ -35,6 +35,14 @@ module testregistro4bits ();
   wire [3:0] qc;
   wire s_outc;
 
+  real cambioqc;//variables reales para comparar tiempos
+  real cambioqe;
+  real cambiosoc;
+  real cambiosoe;
+  real tp = 43;//tolerancia de tiempo entre cambios
+  integer contador = 0;//contador de cantidad de diferencias
+ 
+
 
 rdesplazante estructural(//estructural yosys
   .CLK(clk),
@@ -63,18 +71,25 @@ rdesplazante1 conductual(//conductual
 
   always # 17.4 clk = ~clk;
 
-  always @(qe,qc ) begin
-    if(qe != qc)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
+  always @(qe) cambioqe = $time;
+  always @(qc) cambioqc = $time;
+  always @(s_outc) cambiosoc = $time;
+  always @(s_oute) cambiosoe = $time;
 
+
+  always @(qe,qc ) begin
+	  if((cambioqe - cambioqc) >= tp ) begin $display("<<<<<<<<<<<<<<<<Hay diferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
+	  ++contador;
+  end
   end
 
   always @(s_outc,s_oute ) begin
-    if(s_outc != s_oute)$display("<<<<<<<<<<<<<<<<HAY ADiferencias entre las salidas s_out  >>>>>>>>>>>>>>>>>>>");
-
+	  if((cambiosoe - cambiosoc) >= tp )begin $display("<<<<<<<<<<<<<<<<Hay diferencias entre las salidas s_out  >>>>>>>>>>>>>>>>>>>");
+	  ++contador;
+  end
   end
 
   initial begin
-
     # 50;
     @(posedge clk);
     modo <= 2'b00;
@@ -232,12 +247,11 @@ rdesplazante1 conductual(//conductual
       dir <= 1'b1;
 
     # 550;
-    @(posedge clk);
-
-    $display("------------------------------------");
-    $display("##### FIN TEST DE REGISTRO    #####-");
-    $display("------------------------------------");
-
+//    @(posedge clk);
+    $display("--------------------------------------------------------------------------------------");
+    $display("#####  FIN COMPARACION DE SINTESIS DE YOSYS Y DESCRIPCION CONDUCTUAL (TAREA2)   ######");
+    $display("--------------------------------------------------------------------------------------");
+    $display("Cantidad de diferencias totales: %d", contador);
     $finish;
   end
 
@@ -245,11 +259,12 @@ rdesplazante1 conductual(//conductual
     begin
     $dumpfile("build/testT5.vcd");
     $dumpvars;
-    $display("------------------------------------");
-    $display("-- Test para modulo registro4bits --");
-    $display("------------------------------------");
-    $display ("\t     tiempo | enb | dir | s_in | modo | d    | q    | s_out | tiempo");
-    $monitor            ("%t| %b   | %b   | %b    | %b   | %b | %b | %b     | %f ns",
-                          $time, enb, dir, s_in, modo, d, qc, s_outc , $realtime);
+    $display("Nota: descripcion estructural es la de yosys mientras que la conductual es la de la tarea 2");
+    $display("------------------------------------------------------------");
+    $display("-- COMPARACION SINTESYS DE YOSYS Y DESCRIPCION CONDUCTUAL --");
+    $display("------------------------------------------------------------");  
+    $display("\t      tiempo      |enb |  dir | s_in| modo |  d   |   qc   |s_oc |  qe  | s_oe| tiempo");
+    $monitor("%t      | %b  |   %b  |  %b  |  %b  | %b | %b   |  %b  | %b | %b   | %f ns",
+                          $time, enb, dir, s_in, modo, d, qc, s_outc ,qe, s_oute, $realtime);
   end
 endmodule
