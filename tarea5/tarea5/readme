@@ -1,20 +1,32 @@
 Tarea 5
-Emilio Rojas y Robin Gonzalez
+Robin Gonzalez y Emilio Rojas
 
 Instrucciones de ejecución:
 
-make s		#realiza la sintesis de yosys con el archivo en src/yosyssrc
-make 		#compila el archivo de prueba
-make run	#ejecuta el archivo de prueba
-make gtk 	#abre gtkwave para ver resultados
+make s		#realiza la sintesis de yosys con el archivo en src/yosyssrc ejecutar antes de cualquier otro comando
+make 		#compila los archivos de pruebas
+make run1	#ejecuta el archivo de prueba respectivo
+make run2
+make run3
+make gtk1 	#abre gtkwave para ver el resultado respectivo
+make gtk2
+make gtk3
 make clean 	#borra todos archivos creados
 
 Organización en directorios:
 .
-├── build	#resultados de ejecucion, es borrado con make clean
+├── build 	->contiene los resultados de ejecución y compilación,se borra con make clean
+│   ├── 2estructurales
 │   ├── abc_comb.dot
+│   ├── conductual_sintesis_biblioteca1.vcd
+│   ├── conductual_sintesis_biblioteca.vcd
+│   ├── conductual_sintesis_generica2.vcd
+│   ├── conductual_sintesis_generica.vcd
 │   ├── dff_seq.dot
-│   ├── exe
+│   ├── estructuralCmoslib
+│   ├── estructuralGenerico
+│   ├── estrucutal_t4_estructural_biblioteca3.vcd
+│   ├── estrucutal_t4_estructural_biblioteca.vcd
 │   ├── fsm.dot
 │   ├── fsm_opt.dot
 │   ├── memory.dot
@@ -26,16 +38,32 @@ Organización en directorios:
 │   ├── synth.dot
 │   ├── techmap.dot
 │   ├── techmap_opt.dot
-│   ├── testT5.vcd
 │   └── yosys_sreg_sintetizado.v
-├── lib		#bibliotecas para yosys	 
+├── lib 	->bibliotecas de yosys
 │   ├── cmos_cells.lib
 │   └── cmos_cells.v
 ├── makefile
-└── src		#codigo fuente para la sintesis y para las pruebas
+├── readme
+└── src 	->código fuente
+    ├── modulosT3
+    │   ├── ffD.v
+    │   ├── mux.v
+    │   ├── nandGate.v
+    │   ├── norGate.v
+    │   └── notGate.v
+    ├── modulosT4
+    │   ├── bitHolder.v
+    │   ├── enabler.v
+    │   ├── salidaSerial.v
+    │   ├── serialOcontiguo.v
+    │   └── ternarioDoble.v
+    ├── registro4bits.v
     ├── sreg1.v
     ├── syn4bitreg.ys
+    ├── tests 	->códio para las diferentes pruebas
+    │   ├── cvssb.v
+    │   ├── cvssg.v
+    │   └── et4vss.v
     ├── test.v
-    └── yosyssrc
+    └── yosyssrc 	->fuente para la síntesis de yosys
         └── sreg.v
-
