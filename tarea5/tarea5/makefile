@@ -11,7 +11,7 @@ SRCT3=src/modulosT3/*.v
 all:
 	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1}
 	iverilog ${SRC2}  -o ${EXE2}
-	iverilog ${SRC3} ${SRCT4} lib/cmos_cells.v  -o ${EXE3}
+	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3}
 
 1:
 	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1}

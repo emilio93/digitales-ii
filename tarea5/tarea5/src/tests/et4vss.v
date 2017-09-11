@@ -56,14 +56,14 @@ rdesplazante estructural(//estructural yosys con biblioteca de componentes
 );
 
 registro4bits estructuralt4(//estrucutal de la tarea 4
-  .CLK(clk),
-  .ENB(enb),
-  .DIR(dir),
-  .S_IN(s_in),
-  .MODE(modo),
-  .D(d),
-  .Q(qc),
-  .S_OUT(s_outc)
+  .clk(clk),
+  .enb(enb),
+  .dir(dir),
+  .s_in(s_in),
+  .modo(modo),
+  .d(d),
+  .q(qc),
+  .s_out(s_outc)
 );
 
   // inicio de la señal de reloj.
