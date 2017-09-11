@@ -257,7 +257,7 @@ registro4bits estructuralt4(//estrucutal de la tarea 4
 
   initial
     begin
-    $dumpfile("build/estrucutal_t4_estructural_biblioteca.vcd");
+    $dumpfile("build/estrucutal_t4_estructural_biblioteca3.vcd");
     $dumpvars;
     $display("Nota: descripcion estructural es la de yosys mientras que la conductual es la de la tarea 2");
     $display("-------------------------------------------------------------");

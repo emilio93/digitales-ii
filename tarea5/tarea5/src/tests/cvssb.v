@@ -257,7 +257,7 @@ rdesplazante1 conductual(//conductual
 
   initial
     begin
-    $dumpfile("build/conductual_sintesis_biblioteca.vcd");
+    $dumpfile("build/conductual_sintesis_biblioteca1.vcd");
     $dumpvars;
     $display("Nota: descripcion estructural es la de yosys mientras que la conductual es la de la tarea 2");
     $display("------------------------------------------------------------");

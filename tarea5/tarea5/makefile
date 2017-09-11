@@ -1,4 +1,6 @@
-GTK=build/*.vcd
+GTK1=build/*1.vcd
+GTK2=build/*2.vcd
+GTK3=build/*3.vcd
 EXE1=build/estructuralCmoslib
 EXE2=build/estructuralGenerico
 EXE3=build/2estructurales
@@ -34,8 +36,14 @@ run2:
 run3:
 	vvp ${EXE3}
 
-gtk:
-	gtkwave ${GTK} &
+gtk1:
+	gtkwave ${GTK1} &
+
+gtk2:
+	gtkwave ${GTK2} &
+
+gtk3:
+	gtkwave ${GTK3} &
 
 clean:
 	rm -rf build
