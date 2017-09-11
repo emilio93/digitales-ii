@@ -1,4 +1,3 @@
-SRC=src/*.v build/yosys_sreg_sintetizado.v	
 GTK=build/*.vcd
 EXE=build/exe
 
