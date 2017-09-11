@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.83 (w)1999-2017 BSI
 [*] Mon Sep 11 04:23:10 2017
 [*]
-[dumpfile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea5/tarea5/build/conductual_sintesis_biblioteca1.vcd"
+[dumpfile] "./build/conductual_sintesis_biblioteca1.vcd"
 [dumpfile_mtime] "Mon Sep 11 04:18:39 2017"
 [dumpfile_size] 30951
-[savefile] "/home/dvl/Desktop/ucr/2017-ii/523/repo/tarea5/tarea5/conductual_sintesis_biblioteca1.gtkw"
+[savefile] "./conductual_sintesis_biblioteca1.gtkw"
 [timestart] 0
 [size] 1878 1025
 [pos] -1 -1

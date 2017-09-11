@@ -1,6 +1,6 @@
-GTK1=build/*1.vcd
-GTK2=build/*2.vcd
-GTK3=build/*3.vcd
+GTK1=./*1.gtkw
+GTK2=./*2.gtkw
+GTK3=./*3.gtkw
 EXE1=build/estructuralCmoslib
 EXE2=build/estructuralGenerico
 EXE3=build/2estructurales
