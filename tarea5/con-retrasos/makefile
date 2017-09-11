@@ -28,11 +28,11 @@ all:
 3:
 	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3} ${DELAY_MODE}
 
-s:	
+s:
 	mkdir -p build
 	yosys src/syn4bitreg.ys
 	rm -f *.pid
-	
+
 
 run:
 	$(foreach test,$(wildcard build/*estructural*), $(CC1) $(VPI) $(test);)
@@ -44,13 +44,13 @@ run3:
 	vvp ${VPI} ${EXE3}
 
 gtk1:
-	gtkwave ${GTK1} &
+	gtkwave ${GTK1}
 
 gtk2:
-	gtkwave ${GTK2} &
+	gtkwave ${GTK2}
 
 gtk3:
-	gtkwave ${GTK3} &
+	gtkwave ${GTK3}
 
 clean:
 	rm -rf build
