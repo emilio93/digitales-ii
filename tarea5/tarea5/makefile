@@ -10,19 +10,20 @@ SRC3=src/tests/et4vss.v
 SRCT4=src/modulosT4/*.v
 SRCT3=src/modulosT3/*.v
 
+DELAY_MODE=-Ttyp
 all:
-	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1}
-	iverilog ${SRC2}  -o ${EXE2}
-	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3}
+	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1} ${DELAY_MODE}
+	iverilog ${SRC2}  -o ${EXE2} ${DELAY_MODE}
+	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3} ${DELAY_MODE}
 
 1:
-	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1}
+	iverilog ${SRC1} lib/cmos_cells.v  -o ${EXE1} ${DELAY_MODE}
 
 2:
-	iverilog ${SRC2}  -o ${EXE2}
+	iverilog ${SRC2}  -o ${EXE2} ${DELAY_MODE}
 
 3:
-	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3}	
+	iverilog ${SRC3} ${SRCT4} ${SRCT3} lib/cmos_cells.v  -o ${EXE3} ${DELAY_MODE}
 
 s:	
 	mkdir -p build
