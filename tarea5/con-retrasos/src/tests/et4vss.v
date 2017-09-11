@@ -21,8 +21,8 @@ module testregistro4bits ();
 //  reg [1:0] modoe;
 //  reg [3:0] de;
 
-  wire [3:0] qc;
-  wire s_outc;
+  wire [3:0] qe;
+  wire s_oute;
 
   reg clk;//termina con c es conductual
   reg enb;
@@ -32,12 +32,12 @@ module testregistro4bits ();
   reg [1:0] modo;
   reg [3:0] d;
 
-  wire [3:0] qct4;
-  wire s_outct4;
+  wire [3:0] qc;
+  wire s_outc;
 
   real cambioqc;//variables reales para comparar tiempos
-  real cambioqe;//lo que tiene e seria para la estructural de yosys
-  real cambiosoc;//lo que tiene c seria para la estructural de tarea //lo que tiene c seria para la estructural de tarea 4
+  real cambioqe;
+  real cambiosoc;
   real cambiosoe;
   real tp = 43;//tolerancia de tiempo entre cambios
   integer contador = 0;//contador de cantidad de diferencias
@@ -51,8 +51,8 @@ rdesplazante estructural(//estructural yosys con biblioteca de componentes
   .S_IN(s_in),
   .MODE(modo),
   .D(d),
-  .Q(qc),
-  .S_OUT(s_outc)
+  .Q(qe),
+  .S_OUT(s_oute)
 );
 
 registro4bits estructuralt4(//estrucutal de la tarea 4
@@ -62,8 +62,8 @@ registro4bits estructuralt4(//estrucutal de la tarea 4
   .s_in(s_in),
   .modo(modo),
   .d(d),
-  .q(qct4),
-  .s_out(s_outct4)
+  .q(qc),
+  .s_out(s_outc)
 );
 
   // inicio de la señal de reloj.
@@ -71,19 +71,19 @@ registro4bits estructuralt4(//estrucutal de la tarea 4
 
   always # 17.4 clk = ~clk;
 
-  always @(qc) cambioqe = $time;
-  always @(qct4) cambioqc = $time;
-  always @(s_outct4) cambiosoc = $time;
-  always @(s_outc) cambiosoe = $time;
+  always @(qe) cambioqe = $time;
+  always @(qc) cambioqc = $time;
+  always @(s_outc) cambiosoc = $time;
+  always @(s_oute) cambiosoe = $time;
 
 
-  always @(qc,qct4 ) begin
+  always @(qe,qc ) begin
 	  if((cambioqe - cambioqc) >= tp ) begin $display("<<<<<<<<<<<<<<<<Hay diferencias entre las salidas  q  >>>>>>>>>>>>>>>>>>>");
 	  ++contador;
   end
   end
 
-  always @(s_outct4,s_outc ) begin
+  always @(s_outc,s_oute ) begin
 	  if((cambiosoe - cambiosoc) >= tp )begin $display("<<<<<<<<<<<<<<<<Hay diferencias entre las salidas s_out  >>>>>>>>>>>>>>>>>>>");
 	  ++contador;
   end
@@ -263,8 +263,8 @@ registro4bits estructuralt4(//estrucutal de la tarea 4
     $display("-------------------------------------------------------------");
     $display("-- COMPARACION SINTESYS DE YOSYS Y DESCRIPCION ESTRUCTURAL --");
     $display("-------------------------------------------------------------");  
-    $display("\t      tiempo      |enb |  dir | s_in| modo |  d   |   qc   |s_oc |  qct4  | s_oct4| tiempo");
+    $display("\t      tiempo      |enb |  dir | s_in| modo |  d   |   qc   |s_oc |  qe  | s_oe| tiempo");
     $monitor("%t      | %b  |   %b  |  %b  |  %b  | %b | %b   |  %b  | %b | %b   | %f ns",
-                          $time, enb, dir, s_in, modo, d, qc, s_outc ,qct4, s_outct4, $realtime);
+                          $time, enb, dir, s_in, modo, d, qc, s_outc ,qe, s_oute, $realtime);
   end
 endmodule

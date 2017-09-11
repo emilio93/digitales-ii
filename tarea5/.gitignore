@@ -1,5 +1,6 @@
 *.pid
 *.dot
+*.vcd
 pdfs
 build
 release
