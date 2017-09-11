@@ -26,7 +26,7 @@ all:
 
 s:	
 	mkdir -p build
-	yosys src/syn4bitreg.ys
+	yosys src/yosyssrc/syn4bitreg.ys
 	rm -f *.pid
 	
 run1:
